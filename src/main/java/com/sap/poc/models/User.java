@@ -13,17 +13,22 @@ import java.util.List;
 @DiscriminatorColumn(name = "USER_TYPE")
 public abstract class User implements UserDetails {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String username;
     private String password;
-    @OneToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch=FetchType.EAGER)
+    @JoinTable(name = "User_Role",
+            joinColumns = @JoinColumn(name = "User_id"),
+            inverseJoinColumns = @JoinColumn(name = "Role_id"))
     private List<Role> roles = new ArrayList<>();
 
     private String name;
     private String email;
 
+    @Override
     public String getUsername() {
         return username;
     }
@@ -32,6 +37,7 @@ public abstract class User implements UserDetails {
         this.username = username;
     }
 
+    @Override
     public String getPassword() {
         return password;
     }
@@ -54,6 +60,14 @@ public abstract class User implements UserDetails {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public void setRoles(String role) {
+        this.roles.add(new Role(role));
+    }
+
+    public List<Role> getRoles() {
+        return roles;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.sap.poc.models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -14,6 +15,11 @@ public class Team {
     private TeamOwner owner;
     @OneToMany(mappedBy = "team")
     private List<TeamMember> members;
+
+    public Team(){
+        owner = null;
+        members = new ArrayList<TeamMember>();
+    }
 
     public TeamOwner getOwner() {
         return owner;
@@ -30,4 +36,5 @@ public class Team {
     public void setMembers(List<TeamMember> members) {
         this.members = members;
     }
+
 }

@@ -8,8 +8,23 @@
    http://www.springframework.org/schema/security
    http://www.springframework.org/schema/security/spring-security-4.2.xsd">
 
-    <http auto-config="true">
-        <intercept-url pattern="/homepage.jsp" access="ROLE_ADMIN"/>
+    <http security="none" pattern="/resources/**"/>
+    <http use-expressions="true">
+        <intercept-url pattern="/logout" access="permitAll"/>
+        <intercept-url pattern="/login" access="permitAll"/>
+        <intercept-url pattern="/register" access="permitAll"/>
+        <intercept-url pattern="/**" access="hasRole('ROLE_ADMIN')"/>
+        <logout
+                logout-success-url="/login?logout"
+                logout-url="/logout"
+        />
+        <form-login
+                authentication-failure-url="/login?error"
+                login-page="/login"
+                login-processing-url="/login"
+                password-parameter="password"
+                username-parameter="username"
+        />
     </http>
     <authentication-manager>
         <authentication-provider>
