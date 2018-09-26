@@ -30,4 +30,14 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
+    <bean name="roleDao" class="com.sap.poc.daos.impl.RoleDaoImp">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean name="roleService" class="com.sap.poc.services.impl.RoleServiceImp">
+        <constructor-arg ref="hibernateRoleDao"></constructor-arg>
+    </bean>
+    <bean name="hibernateRoleDao" class="com.sap.poc.daos.impl.RoleDaoImp">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
 </beans>
