@@ -1,5 +1,6 @@
 package com.sap.poc.controllers;
 
+import com.sap.poc.models.Role;
 import com.sap.poc.models.Team;
 import com.sap.poc.models.TeamMember;
 import com.sap.poc.models.TeamOwner;
@@ -31,12 +32,10 @@ public class RegistrationController {
     public String registerUser(Model model, TeamOwner user) {
         Team team = new Team();
 
-        user.setRoles("ROLE_OWNER");
+        user.addRole(new Role("OWNER"));
 
         team.setOwner(user);
         user.addTeam(team);
-
-        
 
         userService.create(user);
 

@@ -26,7 +26,7 @@ public class UserDaoImp extends HibernateDaoSupport implements UserDao {
     @Override
     @Transactional
     public void create(User user) {
-        getHibernateTemplate().save(user);
+        getHibernateTemplate().persist(user);
     }
 
     @Override

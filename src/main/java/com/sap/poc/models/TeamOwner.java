@@ -11,7 +11,7 @@ import java.util.List;
 public class TeamOwner extends User {
 
     @OneToMany(mappedBy = "owner")
-    private List<Team> teams = new ArrayList<Team>();
+    private List<Team> teams = new ArrayList<>();
 
     public List<Team> getTeams() {
         return teams;

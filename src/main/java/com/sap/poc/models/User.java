@@ -19,10 +19,10 @@ public abstract class User implements UserDetails {
 
     private String username;
     private String password;
-    @ManyToMany(fetch=FetchType.EAGER)
+    @ManyToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
     @JoinTable(name = "User_Role",
             joinColumns = @JoinColumn(name = "User_id"),
-            inverseJoinColumns = @JoinColumn(name = "Role_id"))
+            inverseJoinColumns = @JoinColumn(name = "Role_roleName"))
     private List<Role> roles = new ArrayList<>();
 
     private String name;
@@ -30,7 +30,7 @@ public abstract class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return this.username;
     }
 
     public void setUsername(String username) {
@@ -39,7 +39,7 @@ public abstract class User implements UserDetails {
 
     @Override
     public String getPassword() {
-        return password;
+        return this.password;
     }
 
     public void setPassword(String password) {
@@ -62,8 +62,12 @@ public abstract class User implements UserDetails {
         this.email = email;
     }
 
-    public void setRoles(String role) {
-        this.roles.add(new Role(role));
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
+    public void addRole(Role role) {
+        this.roles.add(role);
     }
 
     public List<Role> getRoles() {
