@@ -1,6 +1,7 @@
 package com.sap.poc.services.impl;
 
 import com.sap.poc.daos.TeamDao;
+import com.sap.poc.daos.impl.TeamDaoImp;
 import com.sap.poc.models.Team;
 import com.sap.poc.services.TeamService;
 
@@ -10,35 +11,39 @@ import java.util.List;
 public class TeamServiceImp implements TeamService {
 
     @Resource
-    private TeamDao teamDao;
+    private TeamDao hibernateTeamDao;
+
+    public TeamServiceImp(TeamDao hibernateTeamDao) {
+        this.hibernateTeamDao = hibernateTeamDao;
+    }
 
     @Override
     public void create(Team team) {
-        teamDao.create(team);
+        hibernateTeamDao.create(team);
     }
 
     @Override
     public void refresh(Team team) {
-        teamDao.refresh(team);
+        hibernateTeamDao.refresh(team);
     }
 
     @Override
     public void update(Team team) {
-        teamDao.update(team);
+        hibernateTeamDao.update(team);
     }
 
     @Override
     public void delete(Team team) {
-        teamDao.delete(team);
+        hibernateTeamDao.delete(team);
     }
 
     @Override
     public List<Team> getTeams() {
-        return teamDao.getTeams();
+        return hibernateTeamDao.getTeams();
     }
 
     @Override
     public Team getTeamByOwner(String owner) {
-        return teamDao.getTeamByOwner(owner);
+        return hibernateTeamDao.getTeamByOwner(owner);
     }
 }

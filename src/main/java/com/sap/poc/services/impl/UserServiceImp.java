@@ -10,40 +10,44 @@ import java.util.List;
 public class UserServiceImp implements UserService {
 
     @Resource
-    private UserDao userDao;
+    private UserDao hibernateUserDao;
+
+    public UserServiceImp(UserDao hibernateUserDao) {
+        this.hibernateUserDao = hibernateUserDao;
+    }
 
     @Override
     public void create(User user) {
-        userDao.create(user);
+        hibernateUserDao.create(user);
     }
 
     @Override
     public void refresh(User user) {
-        userDao.refresh(user);
+        hibernateUserDao.refresh(user);
     }
 
     @Override
     public void update(User user) {
-        userDao.update(user);
+        hibernateUserDao.update(user);
     }
 
     @Override
     public void delete(User user) {
-        userDao.delete(user);
+        hibernateUserDao.delete(user);
     }
 
     @Override
     public User getUserByName(String name) {
-        return userDao.getUserByName(name);
+        return hibernateUserDao.getUserByName(name);
     }
 
     @Override
     public User getUserByLogin(String login) {
-        return userDao.getUserByLogin(login);
+        return hibernateUserDao.getUserByLogin(login);
     }
 
     @Override
     public List<User> getUsers() {
-        return userDao.getUsers();
+        return hibernateUserDao.getUsers();
     }
 }

@@ -1,6 +1,7 @@
 package com.sap.poc.daos;
 
 import com.sap.poc.models.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 

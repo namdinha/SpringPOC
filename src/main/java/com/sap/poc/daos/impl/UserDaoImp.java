@@ -1,7 +1,6 @@
 package com.sap.poc.daos.impl;
 
 import com.sap.poc.daos.UserDao;
-import com.sap.poc.models.Team;
 import com.sap.poc.models.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

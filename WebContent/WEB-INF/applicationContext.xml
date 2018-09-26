@@ -10,18 +10,24 @@
     <mvc:annotation-driven/>
     <mvc:resources mapping="/resources/**" location="/resources/"/>
 
-    <alias name="defaultTeamDao" alias="teamDao"/>
-    <bean name="defaultTeamDao" class="com.sap.poc.daos.impl.TeamDaoImp">
+    <bean name="userDao" class="com.sap.poc.daos.impl.UserDaoImp">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
-    <alias name="defaultUserDao" alias="userDao"/>
-    <bean name="defaultUserDao" class="com.sap.poc.daos.impl.UserDaoImp">
+    <bean name="userService" class="com.sap.poc.services.impl.UserServiceImp">
+        <constructor-arg ref="hibernateUserDao"></constructor-arg>
+    </bean>
+    <bean name="hibernateUserDao" class="com.sap.poc.daos.impl.UserDaoImp">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
-    <alias name="defaultUserService" alias="userService"/>
-    <bean name="defaultUserService" class="com.sap.poc.services.impl.UserServiceImp"/>
-    <alias name="defaultTeamService" alias="teamService"/>
-    <bean name="defaultTeamService" class="com.sap.poc.services.impl.TeamServiceImp"/>
+    <bean name="teamDao" class="com.sap.poc.daos.impl.TeamDaoImp">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean name="teamService" class="com.sap.poc.services.impl.TeamServiceImp">
+        <constructor-arg ref="hibernateTeamDao"></constructor-arg>
+    </bean>
+    <bean name="hibernateTeamDao" class="com.sap.poc.daos.impl.TeamDaoImp">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
 
 </beans>
