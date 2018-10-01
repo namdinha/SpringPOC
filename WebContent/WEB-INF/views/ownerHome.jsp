@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: I500719
@@ -13,26 +14,31 @@
     <title>Welcome</title>
 </head>
 <body>
-    <h1>Members in your Team</h1>
-    <table>
-        <tr>
-            <td>Member</td>
-            <td>E-mail</td>
-            <td><form:form action="/register/member" method="get">
-                <button type="submit">Add new member</button>
-            </form:form></td>
-        </tr>
-        <c:forEach items="${members}" var="member">
+    <security:authorize access="isAuthenticated()">
+        <security:authentication property="principal" var="user"/>
+        <h1>${user.name}</h1>
+        <h1>Members in your Team</h1>
+        <table>
             <tr>
-                <td>${member.name}</td>
-                <td>${member.email}</td>
-                <td><form:form action="/register/member" method="get" var="member">
-                    <input type="hidden" path="member" value="${member}">
-                    <button type="submit">Edit</button>
+                <td>Member</td>
+                <td>E-mail</td>
+                <td><form:form action="/register/member" method="get">
+                    <button type="submit">Add new member</button>
                 </form:form></td>
             </tr>
-        </c:forEach>
-    </table>
+            <c:forEach items="${members}" var="member">
+                <tr>
+                    <td>${member.name}</td>
+                    <td>${member.email}</td>
+                    <td><form:form action="/register/member" method="get" var="member">
+                        <input type="hidden" path="member" value="${member}">
+                        <button type="submit">Edit</button>
+                    </form:form></td>
+                </tr>
+            </c:forEach>
+        </table>
+    </security:authorize>
+
 
 </body>
 </html>

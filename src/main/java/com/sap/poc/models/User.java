@@ -13,6 +13,8 @@ import java.util.List;
 @DiscriminatorColumn(name = "USER_TYPE")
 public abstract class User implements UserDetails {
 
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

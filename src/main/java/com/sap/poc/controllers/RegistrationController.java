@@ -23,8 +23,6 @@ public class RegistrationController {
     private UserService userService;
     @Resource
     private TeamService teamService;
-    @Resource
-    private RoleService roleService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String getRegisterPage() {

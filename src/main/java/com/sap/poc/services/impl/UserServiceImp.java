@@ -19,8 +19,8 @@ public class UserServiceImp implements UserService, UserDetailsService {
 
     @Resource
     private UserDao hibernateUserDao;
-//    @Autowired
-//    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public UserServiceImp(UserDao hibernateUserDao) {
         this.hibernateUserDao = hibernateUserDao;
@@ -28,7 +28,7 @@ public class UserServiceImp implements UserService, UserDetailsService {
 
     @Override
     public void create(User user) {
-//        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         hibernateUserDao.create(user);
     }
 
