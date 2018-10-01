@@ -4,6 +4,7 @@ import com.sap.poc.models.Role;
 import com.sap.poc.models.Team;
 import com.sap.poc.models.TeamMember;
 import com.sap.poc.models.TeamOwner;
+import com.sap.poc.services.RoleService;
 import com.sap.poc.services.TeamService;
 import com.sap.poc.services.UserService;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,8 @@ public class RegistrationController {
     private UserService userService;
     @Resource
     private TeamService teamService;
+    @Resource
+    private RoleService roleService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String getRegisterPage() {
@@ -29,7 +32,7 @@ public class RegistrationController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String registerUser(Model model, TeamOwner user) {
+    public String registerOwner(Model model, TeamOwner user) {
         Team team = new Team();
 
         user.addRole(new Role("OWNER"));
@@ -38,13 +41,12 @@ public class RegistrationController {
         user.addTeam(team);
 
         userService.create(user);
-
         teamService.create(team);
 
         model.addAttribute("user", userService.getUserByName(user.getName()));
-        model.addAttribute("team", teamService.getTeamByOwner(user.getName()));
+        model.addAttribute("members", user.getTeams().get(0).getMembers());
 
-        return "registerForm";
+        return "ownerHome";
     }
 
     @RequestMapping(value = "/member", method = RequestMethod.GET)

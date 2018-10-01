@@ -1,16 +1,26 @@
 package com.sap.poc.services.impl;
 
+import com.sap.poc.daos.RoleDao;
 import com.sap.poc.daos.UserDao;
 import com.sap.poc.models.User;
+import com.sap.poc.services.RoleService;
 import com.sap.poc.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.annotation.Resource;
+import java.net.URLEncoder;
 import java.util.List;
 
-public class UserServiceImp implements UserService {
+public class UserServiceImp implements UserService, UserDetailsService {
 
     @Resource
     private UserDao hibernateUserDao;
+//    @Autowired
+//    private PasswordEncoder passwordEncoder;
 
     public UserServiceImp(UserDao hibernateUserDao) {
         this.hibernateUserDao = hibernateUserDao;
@@ -18,6 +28,7 @@ public class UserServiceImp implements UserService {
 
     @Override
     public void create(User user) {
+//        user.setPassword(passwordEncoder.encode(user.getPassword()));
         hibernateUserDao.create(user);
     }
 
@@ -49,5 +60,13 @@ public class UserServiceImp implements UserService {
     @Override
     public List<User> getUsers() {
         return hibernateUserDao.getUsers();
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        User user = hibernateUserDao.getUserByLogin(s);
+        if(user == null)
+            throw new UsernameNotFoundException(s);
+        return user;
     }
 }

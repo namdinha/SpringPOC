@@ -25,7 +25,14 @@ public class UserDaoImp extends HibernateDaoSupport implements UserDao {
     @Override
     @Transactional
     public void create(User user) {
-        getHibernateTemplate().persist(user);
+        try{
+            getUserByLogin(user.getUsername());
+            System.out.println("Username already in use."); // Put exception here.
+            return;
+        }
+        catch(Exception e){
+            getHibernateTemplate().save(user);
+        }
     }
 
     @Override

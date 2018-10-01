@@ -5,6 +5,7 @@ import com.sap.poc.models.Role;
 import com.sap.poc.services.RoleService;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 public class RoleServiceImp implements RoleService {
 
@@ -18,12 +19,20 @@ public class RoleServiceImp implements RoleService {
     @Override
     public Role getRole(String roleName) {
         Role role;
-
         role = hibernateRoleDao.getRoleByName(roleName);
         if(role == null){
             hibernateRoleDao.create(new Role(roleName));
+            role = hibernateRoleDao.getRoleByName(roleName);
         }
+        return role;
+    }
 
-        return hibernateRoleDao.getRoleByName(roleName);
+    @Override
+    public void createRolesIfNotCreated(List<String> roleNames){
+        if(hibernateRoleDao.getRoles().size() == 0) {
+            for (String roleName : roleNames){
+                hibernateRoleDao.create(new Role(roleName));
+            }
+        }
     }
 }

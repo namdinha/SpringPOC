@@ -17,15 +17,17 @@ public abstract class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(unique = true)
     private String username;
     private String password;
-    @ManyToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
+    @ManyToMany(fetch=FetchType.EAGER)
     @JoinTable(name = "User_Role",
             joinColumns = @JoinColumn(name = "User_id"),
             inverseJoinColumns = @JoinColumn(name = "Role_roleName"))
     private List<Role> roles = new ArrayList<>();
 
     private String name;
+    @Column(unique = true)
     private String email;
 
     @Override
