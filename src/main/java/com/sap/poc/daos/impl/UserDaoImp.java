@@ -70,6 +70,9 @@ public class UserDaoImp extends HibernateDaoSupport implements UserDao {
     @Override
     @Transactional
     public List<User> getUsers() {
-        return (List<User>) getHibernateTemplate().find("from com.sap.poc.models.User");
+        try (Session session = sessionFactory.openSession()) {
+            DetachedCriteria criteria = DetachedCriteria.forClass(User.class);
+            return (List<User>) criteria.getExecutableCriteria(session).list();
+        }
     }
 }

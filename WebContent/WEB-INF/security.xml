@@ -8,25 +8,6 @@
    http://www.springframework.org/schema/security
    http://www.springframework.org/schema/security/spring-security-4.2.xsd">
 
-    <!--<http security="none" pattern="/resources/**"/>-->
-    <!--<http use-expressions="true">-->
-        <!--<intercept-url pattern="/logout" access="permitAll"/>-->
-        <!--<intercept-url pattern="/login" access="permitAll"/>-->
-        <!--<intercept-url pattern="/register" access="permitAll"/>-->
-        <!--&lt;!&ndash;<intercept-url pattern="/**" access="hasRole('ROLE_ADMIN')"/>&ndash;&gt;-->
-        <!--<logout-->
-                <!--logout-success-url="/login?logout"-->
-                <!--logout-url="/logout"-->
-        <!--/>-->
-        <!--<form-login-->
-                <!--authentication-failure-url="/login?error"-->
-                <!--login-page="/login"-->
-                <!--login-processing-url="/login"-->
-                <!--password-parameter="password"-->
-                <!--username-parameter="username"-->
-        <!--/>-->
-    <!--</http>-->
-
     <http authentication-manager-ref="dao-auth"
           access-decision-manager-ref="accessDecisionManager">
         <intercept-url pattern="/logout" access="permitAll"/>

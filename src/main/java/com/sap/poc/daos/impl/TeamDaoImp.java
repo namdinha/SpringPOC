@@ -51,7 +51,10 @@ public class TeamDaoImp extends HibernateDaoSupport implements TeamDao {
     @Override
     @Transactional
     public List<Team> getTeams() {
-        return (List<Team>) getHibernateTemplate().find("from com.sap.poc.models.Team");
+        try (Session session = sessionFactory.openSession()) {
+            DetachedCriteria criteria = DetachedCriteria.forClass(Team.class);
+            return (List<Team>) criteria.getExecutableCriteria(session).list();
+        }
     }
 
     @Override

@@ -40,6 +40,9 @@ public class RoleDaoImp extends HibernateDaoSupport implements RoleDao {
 
     @Override
     public List<Role> getRoles() {
-        return (List<Role>) getHibernateTemplate().find("from com.sap.poc.models.Role");
+        try (Session session = sessionFactory.openSession()) {
+            DetachedCriteria criteria = DetachedCriteria.forClass(Role.class);
+            return (List<Role>) criteria.getExecutableCriteria(session).list();
+        }
     }
 }
