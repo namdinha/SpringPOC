@@ -13,16 +13,17 @@
         <intercept-url pattern="/logout" access="permitAll"/>
         <intercept-url pattern="/login" access="permitAll"/>
         <intercept-url pattern="/register" access="permitAll"/>
+        <intercept-url pattern="/" access="permitAll"/>
         <!--<intercept-url pattern="/**" access="hasRole('ROLE_ADMIN')"/>-->
-        <form-login login-page="/login" authentication-failure-url="/denied"
+        <form-login login-page="/" authentication-failure-url="/denied"
                     username-parameter="username" password-parameter="password"
-                    default-target-url="/homepage" />
-        <logout invalidate-session="true" logout-success-url="/login"
+                    authentication-success-handler-ref="authSuccessHandler" />
+        <logout invalidate-session="true" logout-success-url="/"
                 logout-url="/j_spring_security_logout" />
         <access-denied-handler error-page="/denied"/>
-        <session-management invalid-session-url="/login">
+        <session-management invalid-session-url="/">
             <concurrency-control max-sessions="1"
-                                 expired-url="/login" />
+                                 expired-url="/" />
         </session-management>
     </http>
 
@@ -62,5 +63,7 @@
             </bean:list>
         </bean:constructor-arg>
     </bean:bean>
+
+    <bean:bean id="authSuccessHandler" class="com.sap.poc.config.AuthSuccessHandler" />
 
 </bean:beans>

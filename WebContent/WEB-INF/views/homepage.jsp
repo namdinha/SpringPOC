@@ -4,9 +4,10 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Book Rooms</title>
+        <title>home</title>
     </head>
     <body>
+        <h1>Register</h1>
         <form:form action="/register" method="post" name="user">
             <div>
                 <label for="name">Name:</label>
@@ -26,13 +27,21 @@
             </div>
             <button type="submit">Register</button>
         </form:form>
-        <!--
-        <script
-                src="http://code.jquery.com/jquery-3.3.1.min.js"
-                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-                crossorigin="anonymous"></script>
-        <script src="<c:url value="/resources/js/main.js" />"></script>
-        -->
+
+        <div class="container">
+            <h1>Login</h1>
+            <form:form servletRelativeAction="/login" method="post">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" name="username" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" name="password" class="form-control" />
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form:form>
+        </div>
 
     </body>
 </html>
