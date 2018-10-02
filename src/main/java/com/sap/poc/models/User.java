@@ -4,9 +4,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -26,8 +24,7 @@ public abstract class User implements UserDetails {
     @JoinTable(name = "User_Role",
             joinColumns = @JoinColumn(name = "User_id"),
             inverseJoinColumns = @JoinColumn(name = "Role_roleName"))
-    private List<Role> roles = new ArrayList<>();
-
+    private Set<Role> roles = new HashSet<>();
     private String name;
     @Column(unique = true)
     private String email;
@@ -66,7 +63,7 @@ public abstract class User implements UserDetails {
         this.email = email;
     }
 
-    public void setRoles(List<Role> roles) {
+    public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
 
@@ -74,7 +71,7 @@ public abstract class User implements UserDetails {
         this.roles.add(role);
     }
 
-    public List<Role> getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
 

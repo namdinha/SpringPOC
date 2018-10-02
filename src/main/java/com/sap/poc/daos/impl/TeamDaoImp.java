@@ -63,7 +63,7 @@ public class TeamDaoImp extends HibernateDaoSupport implements TeamDao {
         User user;
         try (Session session = sessionFactory.openSession()) {
             DetachedCriteria criteria = DetachedCriteria.forClass(User.class);
-            criteria.add(Restrictions.like("name", owner));
+            criteria.add(Restrictions.like("username", owner));
             user = (User) criteria.getExecutableCriteria(session).uniqueResult();
 
             criteria = DetachedCriteria.forClass(Team.class);

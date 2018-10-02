@@ -13,8 +13,10 @@
         <intercept-url pattern="/logout" access="permitAll"/>
         <intercept-url pattern="/login" access="permitAll"/>
         <intercept-url pattern="/register" access="permitAll"/>
-        <intercept-url pattern="/" access="permitAll"/>
-        <!--<intercept-url pattern="/**" access="hasRole('ROLE_ADMIN')"/>-->
+        <intercept-url pattern="/register/member" access="permitAll"/>
+        <!--<intercept-url pattern="/ownerHome" access="hasRole('OWNER')"/>-->
+        <!--<intercept-url pattern="/memberHome" access="hasRole('MEMBER')"/>-->
+        <!--<intercept-url pattern="/**" access="hasAnyRole('OWNER', 'MEMBER')"/>-->
         <form-login login-page="/" authentication-failure-url="/denied"
                     username-parameter="username" password-parameter="password"
                     authentication-success-handler-ref="authSuccessHandler" />

@@ -28,4 +28,14 @@ public class HomeController {
 
         return "homepage";
     }
+
+    @RequestMapping(value="/ownerHome", method = RequestMethod.GET)
+    public String getOwnerHome() {
+        return "ownerHome";
+    }
+
+    @RequestMapping(value="/memberHome", method = RequestMethod.GET)
+    public String getMemberHome() {
+        return "memberHome";
+    }
 }

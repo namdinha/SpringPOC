@@ -4,6 +4,7 @@ import com.sap.poc.daos.TeamDao;
 import com.sap.poc.daos.impl.TeamDaoImp;
 import com.sap.poc.models.Team;
 import com.sap.poc.services.TeamService;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -38,11 +39,13 @@ public class TeamServiceImp implements TeamService {
     }
 
     @Override
+    @Transactional
     public List<Team> getTeams() {
         return hibernateTeamDao.getTeams();
     }
 
     @Override
+    @Transactional
     public Team getTeamByOwner(String owner) {
         return hibernateTeamDao.getTeamByOwner(owner);
     }

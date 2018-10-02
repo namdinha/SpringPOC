@@ -1,6 +1,8 @@
 package com.sap.poc.daos.impl;
 
 import com.sap.poc.daos.UserDao;
+import com.sap.poc.models.Team;
+import com.sap.poc.models.TeamMember;
 import com.sap.poc.models.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -10,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class UserDaoImp extends HibernateDaoSupport implements UserDao {
 
@@ -73,6 +77,19 @@ public class UserDaoImp extends HibernateDaoSupport implements UserDao {
         try (Session session = sessionFactory.openSession()) {
             DetachedCriteria criteria = DetachedCriteria.forClass(User.class);
             return (List<User>) criteria.getExecutableCriteria(session).list();
+        }
+    }
+
+    @Override
+    public Set<TeamMember> getTeamMembers(int teamId) {
+        try (Session session = sessionFactory.openSession()) {
+            DetachedCriteria criteria = DetachedCriteria.forClass(Team.class);
+            criteria.add(Restrictions.like("id", teamId));
+            Team team = (Team) criteria.getExecutableCriteria(session).uniqueResult();
+
+            criteria = DetachedCriteria.forClass(TeamMember.class);
+            criteria.add(Restrictions.like("team", team));
+            return new HashSet<TeamMember>(criteria.getExecutableCriteria(session).hashCode());
         }
     }
 }

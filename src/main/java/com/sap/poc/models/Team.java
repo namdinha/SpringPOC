@@ -2,7 +2,9 @@ package com.sap.poc.models;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Team {
@@ -14,11 +16,10 @@ public class Team {
     @JoinColumn(name = "owner_id")
     private TeamOwner owner;
     @OneToMany(mappedBy = "team")
-    private List<TeamMember> members;
+    private Set<TeamMember> members = new HashSet<>();
 
     public Team(){
         owner = null;
-        members = new ArrayList<TeamMember>();
     }
 
     public TeamOwner getOwner() {
@@ -29,12 +30,24 @@ public class Team {
         this.owner = owner;
     }
 
-    public List<TeamMember> getMembers() {
+    public Set<TeamMember> getMembers() {
         return members;
     }
 
-    public void setMembers(List<TeamMember> members) {
+    public void setMembers(Set<TeamMember> members) {
         this.members = members;
     }
 
+    public void addMember(TeamMember member){
+        this.members.add(member);
+    }
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

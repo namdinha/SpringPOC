@@ -15,28 +15,41 @@
 </head>
 <body>
     <security:authorize access="isAuthenticated()">
-        <security:authentication property="principal" var="user"/>
-        <h1>${user.name}</h1>
+        <security:authentication property="principal" var="owner"/>
+        <h1>${owner.name}</h1>
         <h1>Members in your Team</h1>
         <table>
             <tr>
                 <td>Member</td>
                 <td>E-mail</td>
-                <td><form:form action="/register/member" method="get">
-                    <button type="submit">Add new member</button>
-                </form:form></td>
             </tr>
             <c:forEach items="${members}" var="member">
                 <tr>
                     <td>${member.name}</td>
                     <td>${member.email}</td>
-                    <td><form:form action="/register/member" method="get" var="member">
-                        <input type="hidden" path="member" value="${member}">
-                        <button type="submit">Edit</button>
-                    </form:form></td>
                 </tr>
             </c:forEach>
         </table>
+        <h1>Add Member</h1>
+        <form:form action="/register/member" method="post" name="member">
+            <div>
+                <label for="name">Name:</label>
+                <input id="name" type="text" name="name">
+            </div>
+            <div>
+                <label for="email">E-mail:</label>
+                <input id="email" type="text" name="email">
+            </div>
+            <div>
+                <label for="username">Username:</label>
+                <input id="username" type="text" name="username">
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input id="password" type="password" name="password">
+            </div>
+            <button type="submit">Register</button>
+        </form:form>
     </security:authorize>
 
 

@@ -1,8 +1,10 @@
 package com.sap.poc.services;
 
+import com.sap.poc.models.TeamMember;
 import com.sap.poc.models.User;
 
 import java.util.List;
+import java.util.Set;
 
 public interface UserService {
 
@@ -13,4 +15,5 @@ public interface UserService {
     User getUserByName(String name);
     User getUserByLogin(String login);
     List<User> getUsers();
+    Set<TeamMember> getTeamMembers(int teamId);
 }

@@ -1,6 +1,7 @@
 package com.sap.poc.services.impl;
 
 import com.sap.poc.daos.UserDao;
+import com.sap.poc.models.TeamMember;
 import com.sap.poc.models.User;
 import com.sap.poc.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.annotation.Resource;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class UserServiceImp implements UserService, UserDetailsService {
 
@@ -57,6 +60,11 @@ public class UserServiceImp implements UserService, UserDetailsService {
     @Override
     public List<User> getUsers() {
         return hibernateUserDao.getUsers();
+    }
+
+    @Override
+    public Set<TeamMember> getTeamMembers(int teamId) {
+        return hibernateUserDao.getTeamMembers(teamId);
     }
 
     @Override
