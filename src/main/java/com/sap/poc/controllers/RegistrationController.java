@@ -16,7 +16,7 @@ import java.util.*;
 
 @Controller
 @RequestMapping(value = "/register")
-public class RegistrationController {
+public class RegistrationController extends GenericController{
 
     @Resource
     private UserService userService;
@@ -29,7 +29,7 @@ public class RegistrationController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String registerOwner(Model model, TeamOwner user) {
+    public String registerOwner(Model model, TeamOwner user, HttpServletRequest request) {
         Team team = new Team();
 
         user.addRole(new Role("OWNER"));
@@ -40,11 +40,14 @@ public class RegistrationController {
         userService.create(user);
         teamService.create(team);
 
-        List<Team> teams = new ArrayList<>(user.getTeams());
+        TeamOwner owner = (TeamOwner) getLoggedUser(request);
 
-        model.addAttribute("members", teams.get(0).getMembers());
+        team = teamService.getTeamByOwner(owner.getUsername());
+        List<TeamMember> members = new ArrayList<>(userService.getTeamMembers(team.getId()));
 
-        return "homepage";
+        model.addAttribute("members", members);
+
+        return "ownerHome";
     }
 
     @RequestMapping(value = "/member", method = RequestMethod.POST)
@@ -54,21 +57,15 @@ public class RegistrationController {
         TeamOwner owner = (TeamOwner) getLoggedUser(request);
 
         Team team = teamService.getTeamByOwner(owner.getUsername());
-        team.setMembers(userService.getTeamMembers(team.getId()));
-        team.addMember(member);
-        team.setOwner(owner);
         member.setTeam(team);
 
         userService.create(member);
+        teamService.update(team);
 
-        List<TeamMember> members = new ArrayList<>(team.getMembers());
+        List<TeamMember> members = new ArrayList<>(userService.getTeamMembers(team.getId()));
 
         model.addAttribute("members", members);
 
-        return "homepage";
-    }
-
-    public User getLoggedUser(HttpServletRequest request){
-        return userService.getUserByLogin(request.getUserPrincipal().getName());
+        return "ownerHome";
     }
 }

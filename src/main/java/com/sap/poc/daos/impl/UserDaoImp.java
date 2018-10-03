@@ -87,9 +87,9 @@ public class UserDaoImp extends HibernateDaoSupport implements UserDao {
             criteria.add(Restrictions.like("id", teamId));
             Team team = (Team) criteria.getExecutableCriteria(session).uniqueResult();
 
-            criteria = DetachedCriteria.forClass(TeamMember.class);
+            criteria = DetachedCriteria.forClass(User.class);
             criteria.add(Restrictions.like("team", team));
-            return new HashSet<TeamMember>(criteria.getExecutableCriteria(session).hashCode());
+            return new HashSet<>(criteria.getExecutableCriteria(session).list());
         }
     }
 }
