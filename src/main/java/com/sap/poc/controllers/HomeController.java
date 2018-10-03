@@ -22,10 +22,6 @@ public class HomeController extends GenericController{
 
     @Resource
     private RoleService roleService;
-    @Resource
-    private UserService userService;
-    @Resource
-    private TeamService teamService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String getHomePage() {
@@ -40,16 +36,12 @@ public class HomeController extends GenericController{
     @RequestMapping(value="/ownerHome", method = RequestMethod.GET)
     public String getOwnerHome(Model model, HttpServletRequest request) {
 
-        TeamOwner owner = (TeamOwner) getLoggedUser(request);
-        Team team = teamService.getTeamByOwner(owner.getUsername());
+//        TeamOwner owner = (TeamOwner) getLoggedUser(request);
+//        Team team = teamService.getTeamByOwner(owner.getUsername());
+//
+//        List<TeamMember> members = new ArrayList<>(userService.getTeamMembers(team.getId()));
 
-        List<TeamMember> members = new ArrayList<>(userService.getTeamMembers(team.getId()));
-
-        model.addAttribute("members", members);
-        for(TeamMember mem : members){
-            System.out.println(mem.getUsername());
-        }
-        System.out.println("queee");
+        model.addAttribute("members", getMembersList(request));
 
         return "ownerHome";
     }

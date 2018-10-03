@@ -23,11 +23,6 @@ public class RegistrationController extends GenericController{
     @Resource
     private TeamService teamService;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public String getRegisterPage() {
-        return "homepage";
-    }
-
     @RequestMapping(method = RequestMethod.POST)
     public String registerOwner(Model model, TeamOwner user, HttpServletRequest request) {
         Team team = new Team();
@@ -40,12 +35,12 @@ public class RegistrationController extends GenericController{
         userService.create(user);
         teamService.create(team);
 
-        TeamOwner owner = (TeamOwner) getLoggedUser(request);
+//        TeamOwner owner = (TeamOwner) getLoggedUser(request);
+//
+//        team = teamService.getTeamByOwner(owner.getUsername());
+//        List<TeamMember> members = new ArrayList<>(userService.getTeamMembers(team.getId()));
 
-        team = teamService.getTeamByOwner(owner.getUsername());
-        List<TeamMember> members = new ArrayList<>(userService.getTeamMembers(team.getId()));
-
-        model.addAttribute("members", members);
+        model.addAttribute("members", getMembersList(request));
 
         return "ownerHome";
     }
@@ -62,9 +57,9 @@ public class RegistrationController extends GenericController{
         userService.create(member);
         teamService.update(team);
 
-        List<TeamMember> members = new ArrayList<>(userService.getTeamMembers(team.getId()));
+//        List<TeamMember> members = new ArrayList<>(userService.getTeamMembers(team.getId()));
 
-        model.addAttribute("members", members);
+        model.addAttribute("members", getMembersList(request));
 
         return "ownerHome";
     }
