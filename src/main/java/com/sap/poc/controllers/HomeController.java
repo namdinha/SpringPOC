@@ -36,11 +36,6 @@ public class HomeController extends GenericController{
     @RequestMapping(value="/ownerHome", method = RequestMethod.GET)
     public String getOwnerHome(Model model, HttpServletRequest request) {
 
-//        TeamOwner owner = (TeamOwner) getLoggedUser(request);
-//        Team team = teamService.getTeamByOwner(owner.getUsername());
-//
-//        List<TeamMember> members = new ArrayList<>(userService.getTeamMembers(team.getId()));
-
         model.addAttribute("members", getMembersList(request));
 
         return "ownerHome";

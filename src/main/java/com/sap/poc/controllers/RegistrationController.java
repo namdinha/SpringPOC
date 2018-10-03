@@ -35,11 +35,6 @@ public class RegistrationController extends GenericController{
         userService.create(user);
         teamService.create(team);
 
-//        TeamOwner owner = (TeamOwner) getLoggedUser(request);
-//
-//        team = teamService.getTeamByOwner(owner.getUsername());
-//        List<TeamMember> members = new ArrayList<>(userService.getTeamMembers(team.getId()));
-
         model.addAttribute("members", getMembersList(request));
 
         return "ownerHome";
@@ -56,8 +51,6 @@ public class RegistrationController extends GenericController{
 
         userService.create(member);
         teamService.update(team);
-
-//        List<TeamMember> members = new ArrayList<>(userService.getTeamMembers(team.getId()));
 
         model.addAttribute("members", getMembersList(request));
 

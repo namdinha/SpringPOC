@@ -27,10 +27,12 @@
                 <tr>
                     <td>${member.name}</td>
                     <td>${member.email}</td>
-                    <td><form:form action="/edit/member" method="get" var="member">
-                        <input type="hidden" path="member" value="${member}">
-                        <button type="submit">Edit</button>
-                </form:form></td>
+                    <td>
+                        <form:form action="/edit/member" method="get" name="editMember">
+                            <input type="hidden" id="editUsername" name="username" value="${member.username}">
+                            <button type="submit">Edit</button>
+                        </form:form>
+                    </td>
                 </tr>
             </c:forEach>
         </table>
