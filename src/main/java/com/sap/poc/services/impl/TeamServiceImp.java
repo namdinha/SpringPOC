@@ -39,13 +39,11 @@ public class TeamServiceImp implements TeamService {
     }
 
     @Override
-    @Transactional
     public List<Team> getTeams() {
         return hibernateTeamDao.getTeams();
     }
 
     @Override
-    @Transactional
     public Team getTeamByOwner(String owner) {
         return hibernateTeamDao.getTeamByOwner(owner);
     }

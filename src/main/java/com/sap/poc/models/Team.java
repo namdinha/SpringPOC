@@ -15,8 +15,12 @@ public class Team {
     @ManyToOne
     @JoinColumn(name = "owner_id")
     private TeamOwner owner;
+
     @OneToMany(mappedBy = "team")
     private Set<TeamMember> members = new HashSet<>();
+
+    @OneToMany(mappedBy = "team")
+    private Set<TeamIntervalCalendar> intervalCalendars = new HashSet<>();
 
     public Team(){
         owner = null;
@@ -42,12 +46,19 @@ public class Team {
         this.members.add(member);
     }
 
-
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Set<TeamIntervalCalendar> getIntervalCalendars() {
+        return intervalCalendars;
+    }
+
+    public void setIntervalCalendars(Set<TeamIntervalCalendar> intervalCalendars) {
+        this.intervalCalendars = intervalCalendars;
     }
 }

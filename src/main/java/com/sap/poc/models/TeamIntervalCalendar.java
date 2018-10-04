@@ -2,10 +2,7 @@ package com.sap.poc.models;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
@@ -23,7 +20,13 @@ public class TeamIntervalCalendar {
     private Calendar endDate;
 
     @DateTimeFormat
+    @ElementCollection
+    @CollectionTable(name = "HOLIDAYS", joinColumns = @JoinColumn(name = "TeamIntervalCalendar_id"))
     private Set<Calendar> holidays = new HashSet<>();
+
+    @ManyToOne
+    @JoinColumn(name = "team_id")
+    private Team team;
 
     public int getId() {
         return id;
@@ -55,5 +58,13 @@ public class TeamIntervalCalendar {
 
     public void setHolidays(Set<Calendar> holidays) {
         this.holidays = holidays;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
     }
 }

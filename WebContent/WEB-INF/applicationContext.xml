@@ -10,9 +10,6 @@
     <mvc:annotation-driven/>
     <mvc:resources mapping="/resources/**" location="/resources/"/>
 
-    <bean name="userDao" class="com.sap.poc.daos.impl.UserDaoImp">
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
     <bean name="userService" class="com.sap.poc.services.impl.UserServiceImp">
         <constructor-arg ref="hibernateUserDao"></constructor-arg>
     </bean>
@@ -20,9 +17,6 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
-    <bean name="teamDao" class="com.sap.poc.daos.impl.TeamDaoImp">
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
     <bean name="teamService" class="com.sap.poc.services.impl.TeamServiceImp">
         <constructor-arg ref="hibernateTeamDao"></constructor-arg>
     </bean>
@@ -30,13 +24,17 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
-    <bean name="roleDao" class="com.sap.poc.daos.impl.RoleDaoImp">
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
     <bean name="roleService" class="com.sap.poc.services.impl.RoleServiceImp">
         <constructor-arg ref="hibernateRoleDao"></constructor-arg>
     </bean>
     <bean name="hibernateRoleDao" class="com.sap.poc.daos.impl.RoleDaoImp">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="teamIntervalCalendarService" class="com.sap.poc.services.impl.TeamIntervalCalendarServiceImp">
+        <constructor-arg ref="hibernateTeamIntervalCalendarDao"></constructor-arg>
+    </bean>
+    <bean name="hibernateTeamIntervalCalendarDao" class="com.sap.poc.daos.impl.TeamIntervalCalendarDaoImp">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
