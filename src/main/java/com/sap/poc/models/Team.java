@@ -61,4 +61,8 @@ public class Team {
     public void setIntervalCalendars(Set<TeamIntervalCalendar> intervalCalendars) {
         this.intervalCalendars = intervalCalendars;
     }
+
+    public void addIntervalCalendar(TeamIntervalCalendar intervalCalendar) {
+        this.intervalCalendars.add(intervalCalendar);
+    }
 }
