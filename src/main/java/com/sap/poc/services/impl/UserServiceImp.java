@@ -39,6 +39,7 @@ public class UserServiceImp implements UserService, UserDetailsService {
 
     @Override
     public void update(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         hibernateUserDao.update(user);
     }
 

@@ -19,6 +19,7 @@
     <h1>${owner.name}</h1>
     <h1>Edit Member</h1>
     <form:form action="/edit/member" method="post" name="member">
+        <input type=hidden id="username" type="text" name="username" value="${editMember.username}">
         <div>
             <label for="name">Name:</label>
             <input id="name" type="text" name="name" value="${editMember.name}">
@@ -26,10 +27,6 @@
         <div>
             <label for="email">E-mail:</label>
             <input id="email" type="text" name="email" value="${editMember.email}">
-        </div>
-        <div>
-            <label for="username">Username:</label>
-            <input id="username" type="text" name="username" value="${editMember.username}">
         </div>
         <div>
             <label for="password">Password:</label>

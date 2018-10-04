@@ -9,7 +9,9 @@ import com.sap.poc.services.UserService;
 import org.springframework.stereotype.Controller;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,8 +27,26 @@ public abstract class GenericController {
         return userService.getUserByLogin(request.getUserPrincipal().getName());
     }
 
+    protected void updateLoggedUser(HttpServletRequest request){
+        User user = getLoggedUser(request);
+        String username = user.getUsername();
+        String password = user.getPassword();
+
+        try {
+            request.login(username, password);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        }
+    }
+
     protected List<TeamMember> getMembersList(HttpServletRequest request){
-        TeamOwner owner = (TeamOwner) getLoggedUser(request);
+        TeamOwner owner;
+        try{
+            owner = (TeamOwner) getLoggedUser(request);
+        }
+        catch(NullPointerException e){
+            return new ArrayList<>();
+        }
         Team team = teamService.getTeamByOwner(owner.getUsername());
 
         return new ArrayList<>(userService.getTeamMembers(team.getId()));

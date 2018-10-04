@@ -37,7 +37,7 @@ public class RegistrationController extends GenericController{
 
         model.addAttribute("members", getMembersList(request));
 
-        return "ownerHome";
+        return "homepage";
     }
 
     @RequestMapping(value = "/member", method = RequestMethod.POST)

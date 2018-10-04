@@ -17,6 +17,10 @@
     <security:authorize access="isAuthenticated()">
         <security:authentication property="principal" var="owner"/>
         <h1>${owner.name}</h1>
+        <form:form action="/edit" method="get" name="editOwner">
+            <input type="hidden" id="editOwnerUsername" name="username" value="${owner.username}">
+            <button type="submit">Edit</button>
+        </form:form>
         <h1>Members in your Team</h1>
         <table>
             <tr>
@@ -29,7 +33,7 @@
                     <td>${member.email}</td>
                     <td>
                         <form:form action="/edit/member" method="get" name="editMember">
-                            <input type="hidden" id="editUsername" name="username" value="${member.username}">
+                            <input type="hidden" id="editMemberUsername" name="username" value="${member.username}">
                             <button type="submit">Edit</button>
                         </form:form>
                     </td>
