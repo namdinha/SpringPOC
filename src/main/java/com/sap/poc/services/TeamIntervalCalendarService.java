@@ -9,4 +9,5 @@ public interface TeamIntervalCalendarService {
     void update(TeamIntervalCalendar teamIntervalCalendar);
     void delete(TeamIntervalCalendar teamIntervalCalendar);
     TeamIntervalCalendar getTeamIntervalCalendarById(int id);
+    int getIntervalSize(TeamIntervalCalendar teamIntervalCalendar);
 }
