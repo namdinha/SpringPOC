@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Entity
-public class MemberIntervalCalendar {
+public class MemberShifts {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
