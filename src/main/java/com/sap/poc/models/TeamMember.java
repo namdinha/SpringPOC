@@ -9,6 +9,9 @@ import java.util.*;
 @DiscriminatorValue("Member")
 public class TeamMember extends User{
 
+    public static final Integer DAY = 0;
+    public static final Integer NIGHT = 1;
+
     @ManyToOne
     @JoinColumn(name = "team_id")
     private Team team;

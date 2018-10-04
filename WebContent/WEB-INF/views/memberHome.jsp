@@ -11,32 +11,19 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <c:url value="" var="contextPath"/>
+    <link rel='stylesheet' href='https://cdn.rawgit.com/nizarmah/calendar-javascript-lib/master/calendarorganizer.min.css'>
+    <link href="${contextPath}/resources/css/calendarStyle.css" rel="stylesheet" type="text/css" media="all" />
     <title>Welcome</title>
 </head>
 <body>
 <security:authorize access="isAuthenticated()">
     <security:authentication property="principal" var="member"/>
     <h1>${member.name}</h1>
-    <h1>Members in your Team</h1>
-    <table>
-        <tr>
-            <td>Member</td>
-            <td>E-mail</td>
-            <td><form:form action="/register/member" method="get">
-                <button type="submit">Add new member</button>
-            </form:form></td>
-        </tr>
-        <c:forEach items="${members}" var="member">
-            <tr>
-                <td>${member.name}</td>
-                <td>${member.email}</td>
-                <td><form:form action="/register/member" method="get" var="member">
-                    <input type="hidden" path="member" value="${member}">
-                    <button type="submit">Edit</button>
-                </form:form></td>
-            </tr>
-        </c:forEach>
-    </table>
+    <div id="calendarContainer"></div>
+    <div id="organizerContainer"></div>
+    <script src='https://cdn.rawgit.com/nizarmah/calendar-javascript-lib/cb4b46dd/calendarorganizer.min.js'></script>
+    <script src="${contextPath}/resources/js/calendar.js"></script>
 </security:authorize>
 
 

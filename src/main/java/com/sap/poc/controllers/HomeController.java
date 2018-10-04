@@ -42,7 +42,8 @@ public class HomeController extends GenericController{
     }
 
     @RequestMapping(value="/memberHome", method = RequestMethod.GET)
-    public String getMemberHome() {
+    public String getMemberHome(Model model, HttpServletRequest request) {
+
         return "memberHome";
     }
 }
