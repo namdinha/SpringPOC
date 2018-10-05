@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,6 +48,6 @@ public abstract class GenericController {
         }
         Team team = teamService.getTeamByOwner(owner.getUsername());
 
-        return new ArrayList<>(userService.getTeamMembers(team.getId()));
+        return new ArrayList<>(userService.getMembersByTeamId(team.getId()));
     }
 }

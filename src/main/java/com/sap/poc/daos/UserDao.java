@@ -1,10 +1,13 @@
 package com.sap.poc.daos;
 
+import com.sap.poc.models.Team;
 import com.sap.poc.models.TeamMember;
 import com.sap.poc.models.User;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public interface UserDao {
@@ -16,6 +19,5 @@ public interface UserDao {
     User getUserByName(String name);
     User getUserByLogin(String login);
     List<User> getUsers();
-    Set<TeamMember> getTeamMembers(int teamId);
-
+    List<TeamMember> getMembersByTeam(Team team);
 }

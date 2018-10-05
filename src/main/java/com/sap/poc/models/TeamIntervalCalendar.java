@@ -11,7 +11,7 @@ import java.util.Set;
 @Entity
 public class TeamIntervalCalendar {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @DateTimeFormat
@@ -22,7 +22,7 @@ public class TeamIntervalCalendar {
 
     @DateTimeFormat
     @ElementCollection
-    @CollectionTable(name = "HOLIDAYS", joinColumns = @JoinColumn(name = "TeamIntervalCalendar_id"))
+    @CollectionTable(name = "Holidays", joinColumns = @JoinColumn(name = "TeamIntervalCalendar_id"))
     private Set<Calendar> holidays = new HashSet<>();
 
     @ManyToOne

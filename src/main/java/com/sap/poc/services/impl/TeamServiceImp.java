@@ -1,9 +1,12 @@
 package com.sap.poc.services.impl;
 
 import com.sap.poc.daos.TeamDao;
+import com.sap.poc.daos.UserDao;
 import com.sap.poc.daos.impl.TeamDaoImp;
 import com.sap.poc.models.Team;
+import com.sap.poc.models.TeamOwner;
 import com.sap.poc.services.TeamService;
+import com.sap.poc.services.UserService;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
@@ -13,6 +16,8 @@ public class TeamServiceImp implements TeamService {
 
     @Resource
     private TeamDao hibernateTeamDao;
+    @Resource
+    private UserService userService;
 
     public TeamServiceImp(TeamDao hibernateTeamDao) {
         this.hibernateTeamDao = hibernateTeamDao;
@@ -44,7 +49,13 @@ public class TeamServiceImp implements TeamService {
     }
 
     @Override
-    public Team getTeamByOwner(String owner) {
+    public Team getTeamByOwner(String ownerUsername) {
+        TeamOwner owner = (TeamOwner) userService.getUserByLogin(ownerUsername);
         return hibernateTeamDao.getTeamByOwner(owner);
+    }
+
+    @Override
+    public Team getTeamById(int teamId) {
+        return hibernateTeamDao.getTeamById(teamId);
     }
 }

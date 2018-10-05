@@ -12,8 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class UserDaoImp extends HibernateDaoSupport implements UserDao {
@@ -81,15 +82,12 @@ public class UserDaoImp extends HibernateDaoSupport implements UserDao {
     }
 
     @Override
-    public Set<TeamMember> getTeamMembers(int teamId) {
+    @Transactional
+    public List<TeamMember> getMembersByTeam(Team team) {
         try (Session session = sessionFactory.openSession()) {
-            DetachedCriteria criteria = DetachedCriteria.forClass(Team.class);
-            criteria.add(Restrictions.like("id", teamId));
-            Team team = (Team) criteria.getExecutableCriteria(session).uniqueResult();
-
-            criteria = DetachedCriteria.forClass(User.class);
+            DetachedCriteria criteria = DetachedCriteria.forClass(User.class);
             criteria.add(Restrictions.like("team", team));
-            return new HashSet<>(criteria.getExecutableCriteria(session).list());
+            return (List<TeamMember>) criteria.getExecutableCriteria(session).list();
         }
     }
 }

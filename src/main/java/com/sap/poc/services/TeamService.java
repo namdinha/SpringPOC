@@ -12,5 +12,6 @@ public interface TeamService {
     void delete(Team team);
     List<Team> getTeams();
     Team getTeamByOwner(String owner);
+    Team getTeamById(int teamId);
 
 }

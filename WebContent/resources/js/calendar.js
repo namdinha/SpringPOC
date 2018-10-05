@@ -5,33 +5,33 @@ function createDummyData() {
   var date = new Date();
   var data = {};
 
-  for (var i = 0; i < 10; i++) {
-    data[date.getFullYear() + i] = {};
-
-    for (var j = 0; j < 12; j++) {
-      data[date.getFullYear() + i][j + 1] = {};
-
-      for (var k = 0; k < Math.ceil(Math.random() * 10); k++) {
-        var l = Math.ceil(Math.random() * 28);
-
-        try {
-          data[date.getFullYear() + i][j + 1][l].push({
-            startTime: "10:00",
-            endTime: "12:00",
-            text: "Some Event Here"
-          });
-        } catch (e) {
-          data[date.getFullYear() + i][j + 1][l] = [];
-          data[date.getFullYear() + i][j + 1][l].push({
-            startTime: "10:00",
-            endTime: "12:00",
-            text: "Some Event Here"
-          });
-        }
-      }
+  for(var i = 0; i < 10; i++){
+    data[date.getFullYear()+i] = {};
+    for(var j = 0; j < 12; j++){
+      data[date.getFullYear()+i][j+1] = {};
     }
   }
 
+  for (var i = 0; i < 50; i++) {
+    var d = new Date(date.getFullYear(), date.getMonth(), date.getDate()+i);
+
+    try{
+        data[d.getFullYear()][d.getMonth()+1][d.getDate()].push({
+            startTime: i,
+            endTime: d.getMonth(),
+            text: d.getDate()
+        });
+    }
+    catch(e) {
+        data[d.getFullYear()][d.getMonth()+1][d.getDate()] = [];
+        data[d.getFullYear()][d.getMonth()+1][d.getDate()].push({
+            startTime: i,
+            endTime: d.getMonth(),
+            text: d.getDate()
+        });
+    }
+
+  }
   return data;
 }
 

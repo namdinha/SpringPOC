@@ -18,7 +18,7 @@ public class TeamMember extends User{
 
     @DateTimeFormat
     @ElementCollection
-    @CollectionTable(name = "SHIFTS", joinColumns = @JoinColumn(name = "Member_id"))
+    @CollectionTable(name = "Shifts", joinColumns = @JoinColumn(name = "Member_id"))
     private Map<Calendar, Integer> shifts = new HashMap<>();
 
     public Team getTeam() {

@@ -1,6 +1,9 @@
 package com.sap.poc.daos;
 
+import com.sap.poc.models.Team;
 import com.sap.poc.models.TeamIntervalCalendar;
+
+import java.util.List;
 
 public interface TeamIntervalCalendarDao {
 
@@ -9,4 +12,5 @@ public interface TeamIntervalCalendarDao {
     void update(TeamIntervalCalendar teamIntervalCalendar);
     void delete(TeamIntervalCalendar teamIntervalCalendar);
     TeamIntervalCalendar getTeamIntervalCalendarById(int id);
+    List<TeamIntervalCalendar> getTeamIntervalCalendarByTeam(Team team);
 }

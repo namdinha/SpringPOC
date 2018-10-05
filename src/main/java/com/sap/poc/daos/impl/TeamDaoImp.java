@@ -59,15 +59,21 @@ public class TeamDaoImp extends HibernateDaoSupport implements TeamDao {
 
     @Override
     @Transactional
-    public Team getTeamByOwner(String owner) {
+    public Team getTeamById(int teamId){
+        try (Session session = sessionFactory.openSession()) {
+            DetachedCriteria criteria = DetachedCriteria.forClass(Team.class);
+            criteria.add(Restrictions.like("id", teamId));
+            return (Team) criteria.getExecutableCriteria(session).uniqueResult();
+        }
+    }
+
+    @Override
+    @Transactional
+    public Team getTeamByOwner(TeamOwner owner) {
         User user;
         try (Session session = sessionFactory.openSession()) {
-            DetachedCriteria criteria = DetachedCriteria.forClass(User.class);
-            criteria.add(Restrictions.like("username", owner));
-            user = (User) criteria.getExecutableCriteria(session).uniqueResult();
-
-            criteria = DetachedCriteria.forClass(Team.class);
-            criteria.add(Restrictions.like("owner", user));
+            DetachedCriteria criteria = DetachedCriteria.forClass(Team.class);
+            criteria.add(Restrictions.like("owner", owner));
             return (Team) criteria.getExecutableCriteria(session).uniqueResult();
         }
     }
