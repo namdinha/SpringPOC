@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
@@ -22,8 +22,8 @@ public class CalendarRestController extends GenericController{
     private TeamIntervalCalendarService teamIntervalCalendarService;
 
     @RequestMapping(value = "/getTeamCalendar", method = RequestMethod.GET)
-    public List<TeamIntervalCalendar> getTeamCalendar(HttpServletRequest request){
-        TeamMember loggedMember = (TeamMember) getLoggedUser(request);
+    public List<TeamIntervalCalendar> getTeamCalendar(Principal principal){
+        TeamMember loggedMember = (TeamMember) getLoggedUser(principal);
 
         Team team = loggedMember.getTeam();
 
@@ -31,8 +31,8 @@ public class CalendarRestController extends GenericController{
     }
 
     @RequestMapping(value = "/getMemberShifts", method = RequestMethod.GET)
-    public Map<Calendar, Integer> getMemberShifts(HttpServletRequest request){
-        TeamMember loggedMember = (TeamMember) getLoggedUser(request);
+    public Map<Calendar, Integer> getMemberShifts(Principal principal){
+        TeamMember loggedMember = (TeamMember) getLoggedUser(principal);
 
         return loggedMember.getShifts();
     }

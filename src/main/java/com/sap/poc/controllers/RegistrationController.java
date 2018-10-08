@@ -9,10 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import java.lang.reflect.Member;
 import java.security.Principal;
-import java.util.*;
 
 @Controller
 @RequestMapping(value = "/register")
@@ -24,7 +21,7 @@ public class RegistrationController extends GenericController{
     private TeamService teamService;
 
     @RequestMapping(method = RequestMethod.POST)
-    public String registerOwner(Model model, TeamOwner user, HttpServletRequest request) {
+    public String registerOwner(Model model, TeamOwner user, Principal principal) {
         Team team = new Team();
 
         user.addRole(new Role("OWNER"));
@@ -35,16 +32,16 @@ public class RegistrationController extends GenericController{
         userService.create(user);
         teamService.create(team);
 
-        model.addAttribute("members", getMembersList(request));
+        model.addAttribute("members", getMembersList(principal));
 
         return "homepage";
     }
 
     @RequestMapping(value = "/member", method = RequestMethod.POST)
-    public String registerMember(Model model, TeamMember member, HttpServletRequest request) {
+    public String registerMember(Model model, TeamMember member, Principal principal) {
         member.addRole(new Role("MEMBER"));
 
-        TeamOwner owner = (TeamOwner) getLoggedUser(request);
+        TeamOwner owner = (TeamOwner) getLoggedUser(principal);
 
         Team team = teamService.getTeamByOwner(owner.getUsername());
         member.setTeam(team);
@@ -52,7 +49,7 @@ public class RegistrationController extends GenericController{
         userService.create(member);
         teamService.update(team);
 
-        model.addAttribute("members", getMembersList(request));
+        model.addAttribute("members", getMembersList(principal));
 
         return "ownerHome";
     }

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Controller;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,26 +22,20 @@ public abstract class GenericController {
     @Resource
     private TeamService teamService;
 
-    protected User getLoggedUser(HttpServletRequest request){
-        return userService.getUserByLogin(request.getUserPrincipal().getName());
+    protected User getLoggedUser(Principal principal){
+        return userService.getUserByLogin(principal.getName());
     }
 
-    protected void updateLoggedUser(HttpServletRequest request){
-        User user = getLoggedUser(request);
+    protected void updateLoggedUser(Principal principal){
+        User user = getLoggedUser(principal);
         String username = user.getUsername();
         String password = user.getPassword();
-
-        try {
-            request.login(username, password);
-        } catch (ServletException e) {
-            e.printStackTrace();
-        }
     }
 
-    protected List<TeamMember> getMembersList(HttpServletRequest request){
+    protected List<TeamMember> getMembersList(Principal principal){
         TeamOwner owner;
         try{
-            owner = (TeamOwner) getLoggedUser(request);
+            owner = (TeamOwner) getLoggedUser(principal);
         }
         catch(NullPointerException e){
             return new ArrayList<>();

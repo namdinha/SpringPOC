@@ -51,7 +51,12 @@ public class TeamIntervalCalendarDaoImp extends HibernateDaoSupport implements T
     @Override
     @Transactional
     public TeamIntervalCalendar getTeamIntervalCalendarById(int id) {
-        return null;
+
+        try (Session session = sessionFactory.openSession()) {
+            DetachedCriteria criteria = DetachedCriteria.forClass(TeamIntervalCalendar.class);
+            criteria.add(Restrictions.like("id", id));
+            return (TeamIntervalCalendar) criteria.getExecutableCriteria(session).uniqueResult();
+        }
     }
 
     @Override

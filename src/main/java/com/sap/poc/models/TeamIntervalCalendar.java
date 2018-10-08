@@ -10,16 +10,22 @@ import java.util.*;
 @Entity
 public class TeamIntervalCalendar {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private Date initDate;
-    private Date endDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date initDate = new Date();
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date endDate = new Date();
 
-    @DateTimeFormat()
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @ElementCollection
     @CollectionTable(name = "Holidays", joinColumns = @JoinColumn(name = "TeamIntervalCalendar_id"))
     private Set<Date> holidays = new HashSet<>();
+
+//    @OneToMany(mappedBy = "teamIntervalCalendar")
+//    private Set<Date> dates = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "team_id")
@@ -68,6 +74,7 @@ public class TeamIntervalCalendar {
     }
 
     public void setInitDate(String initDate) {
+        List<String> date = Arrays.asList(initDate.split("-"));
         try {
             this.initDate = format.parse(initDate);
         } catch (ParseException e) {
