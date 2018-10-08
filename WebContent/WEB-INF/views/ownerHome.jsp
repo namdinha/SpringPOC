@@ -60,6 +60,25 @@
             </div>
             <button type="submit">Register</button>
         </form:form>
+        <%--<c:forEach items="${intervals}" var="interval">--%>
+            <%--<div>--%>
+                <%--<c:forEach items="${interval}" var="date">--%>
+                    <%--<div>--%>
+                            <%--${date.toString()}--%>
+                    <%--</div>--%>
+                <%--</c:forEach>--%>
+            <%--</div>--%>
+        <%--</c:forEach>--%>
+        <h1>Add New Interval</h1>
+        <form:form action="/interval/addInterval" method="post" name="newInterval">
+            <div>
+                <input id="initDate" type="date" name="initDate">
+            </div>
+            <div>
+                <input id="endDate" type="date" name="endDate">
+            </div>
+            <button type="submit">Submit</button>
+        </form:form>
     </security:authorize>
 
 

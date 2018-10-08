@@ -20,10 +20,26 @@
 <security:authorize access="isAuthenticated()">
     <security:authentication property="principal" var="member"/>
     <h1>${member.name}</h1>
+
+    <c:forEach items="${intervals}" var="interval">
+        <div>
+            <c:forEach items="${interval}" var="date">
+                <div>
+                    ${date.toString()}
+                </div>
+            </c:forEach>
+        </div>
+    </c:forEach>
+
+
     <div id="calendarContainer"></div>
     <div id="organizerContainer"></div>
-    <script src='https://cdn.rawgit.com/nizarmah/calendar-javascript-lib/cb4b46dd/calendarorganizer.min.js'></script>
-    <script src="${contextPath}/resources/js/calendar.js"></script>
+    <%--<script src='https://cdn.rawgit.com/nizarmah/calendar-javascript-lib/cb4b46dd/calendarorganizer.min.js'></script>--%>
+    <%--<script--%>
+            <%--src="http://code.jquery.com/jquery-3.3.1.min.js"--%>
+            <%--integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="--%>
+            <%--crossorigin="anonymous"></script>--%>
+    <%--<script src="${contextPath}/resources/js/calendar.js"></script>--%>
 </security:authorize>
 
 

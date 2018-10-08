@@ -4,7 +4,6 @@ import com.sap.poc.models.Team;
 import com.sap.poc.models.TeamIntervalCalendar;
 import com.sap.poc.models.TeamMember;
 import com.sap.poc.services.TeamIntervalCalendarService;
-import com.sap.poc.services.UserService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,8 +20,6 @@ public class CalendarRestController extends GenericController{
 
     @Resource
     private TeamIntervalCalendarService teamIntervalCalendarService;
-    @Resource
-    private UserService userService;
 
     @RequestMapping(value = "/getTeamCalendar", method = RequestMethod.GET)
     public List<TeamIntervalCalendar> getTeamCalendar(HttpServletRequest request){
@@ -30,7 +27,7 @@ public class CalendarRestController extends GenericController{
 
         Team team = loggedMember.getTeam();
 
-        return teamIntervalCalendarService.getTeamIntervalCalendarByTeam(team);
+        return teamIntervalCalendarService.getTeamIntervalsCalendarByTeam(team);
     }
 
     @RequestMapping(value = "/getMemberShifts", method = RequestMethod.GET)

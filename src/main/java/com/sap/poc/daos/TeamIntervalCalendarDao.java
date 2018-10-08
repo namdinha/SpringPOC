@@ -12,5 +12,5 @@ public interface TeamIntervalCalendarDao {
     void update(TeamIntervalCalendar teamIntervalCalendar);
     void delete(TeamIntervalCalendar teamIntervalCalendar);
     TeamIntervalCalendar getTeamIntervalCalendarById(int id);
-    List<TeamIntervalCalendar> getTeamIntervalCalendarByTeam(Team team);
+    List<TeamIntervalCalendar> getTeamIntervalsCalendarByTeam(Team team);
 }
