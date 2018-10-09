@@ -38,4 +38,18 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
+    <bean name="teamMemberShift" class="com.sap.poc.services.impl.TeamMemberShiftServiceImp">
+        <constructor-arg ref="hibernateTeamMemberShiftDao"></constructor-arg>
+    </bean>
+    <bean name="hibernateTeamMemberShiftDao" class="com.sap.poc.daos.impl.TeamMemberShiftDaoImp">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="calendarDateService" class="com.sap.poc.services.impl.CalendarDateServiceImp">
+        <constructor-arg ref="hibernateCalendarDateDao"></constructor-arg>
+    </bean>
+    <bean name="hibernateCalendarDateDao" class="com.sap.poc.daos.impl.CalendarDateDaoImp">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
 </beans>

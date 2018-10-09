@@ -1,17 +1,25 @@
 package com.sap.poc.models;
 
-import javax.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
-public class CalendarDate {
+import javax.persistence.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+@Entity
+public class CalendarDate implements Comparable<CalendarDate> {
+
+    private static final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private int day;
-    private int month;
-    private int year;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date date = new Date();
 
-    private boolean isHoliday;
+    private boolean isHolidayOrWeekend;
 
     @ManyToOne
     @JoinColumn(name = "teamIntervalCalendar_id")
@@ -25,35 +33,45 @@ public class CalendarDate {
         this.id = id;
     }
 
-    public int getDay() {
-        return day;
+    public boolean isHolidayOrWeekend() {
+        return isHolidayOrWeekend;
     }
 
-    public void setDay(int day) {
-        this.day = day;
+    public void setHolidayOrWeekend(boolean holidayOrWeekend) {
+        isHolidayOrWeekend = holidayOrWeekend;
     }
 
-    public int getMonth() {
-        return month;
+    public Date getDate() {
+        return date;
     }
 
-    public void setMonth(int month) {
-        this.month = month;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
-    public int getYear() {
-        return year;
+    public void setDate(String date) {
+        try {
+            this.date = format.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void setYear(int year) {
-        this.year = year;
+    public TeamIntervalCalendar getTeamIntervalCalendar() {
+        return teamIntervalCalendar;
     }
 
-    public boolean isHoliday() {
-        return isHoliday;
+    public void setTeamIntervalCalendar(TeamIntervalCalendar teamIntervalCalendar) {
+        this.teamIntervalCalendar = teamIntervalCalendar;
     }
 
-    public void setHoliday(boolean holiday) {
-        isHoliday = holiday;
+    @Override
+    public String toString(){
+        return this.date.toString();
+    }
+
+    @Override
+    public int compareTo(CalendarDate o) {
+        return this.getDate().compareTo(o.getDate());
     }
 }

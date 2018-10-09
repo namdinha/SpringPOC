@@ -50,40 +50,12 @@ public class TeamIntervalCalendarServiceImp implements TeamIntervalCalendarServi
 
     @Override
     public int getIntervalSize(TeamIntervalCalendar teamIntervalCalendar) {
-//        Calendar lastDay = new GregorianCalendar(teamIntervalCalendar.getInitDate().get(Calendar.YEAR), 12, 31);
-//        int yearSizeInDays = lastDay.get(Calendar.DAY_OF_YEAR);
-//        int initInDaysOfYear = teamIntervalCalendar.getInitDate().get(Calendar.DAY_OF_YEAR);
-//        int endInDaysOfYear = teamIntervalCalendar.getEndDate().get(Calendar.DAY_OF_YEAR);
-//        int initYear = teamIntervalCalendar.getInitDate().get(Calendar.YEAR);
-//        int endYear = teamIntervalCalendar.getEndDate().get(Calendar.YEAR);
-//        return (endYear - initYear)*yearSizeInDays + endInDaysOfYear - initInDaysOfYear + 1;
-
-        long timeBetweenInitEnd = teamIntervalCalendar.getEndDate().getTime() - teamIntervalCalendar.getInitDate().getTime();
-        timeBetweenInitEnd = timeBetweenInitEnd/1000; //sec
-        timeBetweenInitEnd = timeBetweenInitEnd/60; //min
-        timeBetweenInitEnd = timeBetweenInitEnd/60; //hour
-        timeBetweenInitEnd = timeBetweenInitEnd/24; //day
-
-        return (int) timeBetweenInitEnd;
+        return 0;
     }
 
     @Override
     public List<Date> getDateListOfInterval(TeamIntervalCalendar teamIntervalCalendar) {
-        int size = getIntervalSize(teamIntervalCalendar);
-
         List<Date> dates = new ArrayList<>();
-//        Calendar initDate = teamIntervalCalendar.getInitDate();
-
-//        for(int i = 0; i < size; i++){
-//            dates.add(new GregorianCalendar(initDate.get(Calendar.YEAR), initDate.get(Calendar.MONTH), initDate.get(Calendar.DAY_OF_MONTH)));
-//            dates.get(i).add(Calendar.DATE, i);
-//        }
-        Date initDate = teamIntervalCalendar.getInitDate();
-        long time;
-        for(int i = 0; i < size; i++){
-            time = initDate.getTime() + 1000*60*60*24;
-            dates.add(new Date(time));
-        }
         return dates;
     }
 
@@ -96,16 +68,6 @@ public class TeamIntervalCalendarServiceImp implements TeamIntervalCalendarServi
     @Override
     public List<TeamIntervalCalendar> getTeamIntervalsCalendarByTeam(Team team) {
         return hibernateTeamIntervalCalendarDao.getTeamIntervalsCalendarByTeam(team);
-    }
-
-    @Override
-    public List<List<Date>> getDateListsOfIntervals(Team team){
-        List<List<Date>> intervalsDates = new ArrayList<>();
-        List<TeamIntervalCalendar> intervals = hibernateTeamIntervalCalendarDao.getTeamIntervalsCalendarByTeam(team);
-        for(TeamIntervalCalendar interval:intervals){
-            intervalsDates.add(getDateListOfInterval(interval));
-        }
-        return intervalsDates;
     }
 
 }

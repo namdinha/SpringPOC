@@ -1,7 +1,5 @@
 package com.sap.poc.models;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import java.util.*;
 
@@ -9,17 +7,12 @@ import java.util.*;
 @DiscriminatorValue("Member")
 public class TeamMember extends User{
 
-    public static final Integer DAY = 0;
-    public static final Integer NIGHT = 1;
-
     @ManyToOne
     @JoinColumn(name = "team_id")
     private Team team;
 
-    @DateTimeFormat
-    @ElementCollection
-    @CollectionTable(name = "Shifts", joinColumns = @JoinColumn(name = "Member_id"))
-    private Map<Calendar, Integer> shifts = new HashMap<>();
+    @OneToMany(mappedBy = "member")
+    private Set<TeamMemberShift> shifts = new HashSet<>();
 
     public Team getTeam() {
         return team;
@@ -29,11 +22,11 @@ public class TeamMember extends User{
         this.team = team;
     }
 
-    public Map<Calendar, Integer> getShifts() {
+    public Set<TeamMemberShift> getShifts() {
         return shifts;
     }
 
-    public void setShifts(Map<Calendar, Integer> shifts) {
+    public void setShifts(Set<TeamMemberShift> shifts) {
         this.shifts = shifts;
     }
 }

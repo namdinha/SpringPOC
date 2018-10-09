@@ -17,6 +17,4 @@ public interface TeamIntervalCalendarService {
     List<Date> getDateListOfInterval(TeamIntervalCalendar teamIntervalCalendar);
     List<TeamIntervalCalendar> getTeamIntervalCalendarByTeamId(int teamId);
     List<TeamIntervalCalendar> getTeamIntervalsCalendarByTeam(Team team);
-
-    List<List<Date>> getDateListsOfIntervals(Team team);
 }
