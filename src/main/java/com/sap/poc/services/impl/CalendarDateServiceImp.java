@@ -2,9 +2,11 @@ package com.sap.poc.services.impl;
 
 import com.sap.poc.daos.CalendarDateDao;
 import com.sap.poc.models.CalendarDate;
+import com.sap.poc.models.TeamIntervalCalendar;
 import com.sap.poc.services.CalendarDateService;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 public class CalendarDateServiceImp implements CalendarDateService {
 
@@ -38,5 +40,10 @@ public class CalendarDateServiceImp implements CalendarDateService {
     @Override
     public CalendarDate getCalendarDateById(int id) {
         return null;
+    }
+
+    @Override
+    public List<CalendarDate> getCalendarDatesByInterval(TeamIntervalCalendar teamIntervalCalendar){
+        return hibernateCalendarDateDao.getCalendarDatesByInterval(teamIntervalCalendar);
     }
 }

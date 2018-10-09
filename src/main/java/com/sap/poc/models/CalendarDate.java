@@ -5,6 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 @Entity
@@ -17,7 +18,7 @@ public class CalendarDate implements Comparable<CalendarDate> {
     private int id;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date date = new Date();
+    private Calendar date = Calendar.getInstance();
 
     private boolean isHolidayOrWeekend;
 
@@ -41,17 +42,17 @@ public class CalendarDate implements Comparable<CalendarDate> {
         isHolidayOrWeekend = holidayOrWeekend;
     }
 
-    public Date getDate() {
+    public Calendar getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Calendar date) {
         this.date = date;
     }
 
     public void setDate(String date) {
         try {
-            this.date = format.parse(date);
+            this.date.setTime(format.parse(date));
         } catch (ParseException e) {
             e.printStackTrace();
         }

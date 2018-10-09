@@ -1,6 +1,9 @@
 package com.sap.poc.daos;
 
 import com.sap.poc.models.CalendarDate;
+import com.sap.poc.models.TeamIntervalCalendar;
+
+import java.util.List;
 
 public interface CalendarDateDao {
 
@@ -9,4 +12,6 @@ public interface CalendarDateDao {
     void update(CalendarDate calendarDate);
     void delete(CalendarDate calendarDate);
     CalendarDate getCalendarDateById(int id);
+
+    List<CalendarDate> getCalendarDatesByInterval(TeamIntervalCalendar teamIntervalCalendar);
 }

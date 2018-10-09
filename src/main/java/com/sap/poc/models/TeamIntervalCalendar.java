@@ -10,8 +10,8 @@ public class TeamIntervalCalendar {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String initDate;
-    private String endDate;
+    private String initDate = "NotSet";
+    private String endDate = "NotSet";
 
     @OneToMany(mappedBy = "teamIntervalCalendar")
     private Set<CalendarDate> dates = new HashSet<>();
@@ -62,5 +62,41 @@ public class TeamIntervalCalendar {
 
     public void setEndDate(String endDate) {
         this.endDate = endDate;
+    }
+
+    public void setDates() throws Exception {
+        if(initDate == "NotSet" || endDate == "NotSet"){
+            throw new Exception("InitDate or EndDate not set.");
+        }
+        else{
+            Set<CalendarDate> dates = new HashSet<>();
+
+            CalendarDate endDate = new CalendarDate();
+            endDate.setDate(this.endDate);
+            endDate.setTeamIntervalCalendar(this);
+
+            CalendarDate initDate = new CalendarDate();
+            initDate.setDate(this.initDate);
+            initDate.setTeamIntervalCalendar(this);
+            dates.add(initDate);
+
+            Calendar dateIterator = (Calendar) initDate.getDate().clone();
+            dateIterator.add(Calendar.DATE, 1);
+
+            CalendarDate date;
+
+            while(dateIterator.before(endDate.getDate())) {
+                date = new CalendarDate();
+                date.setDate((Calendar) dateIterator.clone());
+                date.setTeamIntervalCalendar(this);
+                dates.add(date);
+
+                dateIterator.add(Calendar.DATE, 1);
+            }
+
+            dates.add(endDate);
+
+            this.dates = dates;
+        }
     }
 }

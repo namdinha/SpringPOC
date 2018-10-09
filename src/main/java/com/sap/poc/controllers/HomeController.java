@@ -65,7 +65,9 @@ public class HomeController extends GenericController{
 
     @RequestMapping(value = "/interval/addInterval", method = RequestMethod.POST)
     public String addInterval(Model model, Principal principal, TeamIntervalCalendar newInterval){
+
         TeamOwner owner = (TeamOwner) getLoggedUser(principal);
+
         Team team = teamService.getTeamByOwner(owner.getUsername());
         Set<TeamMember> members = new HashSet<>(userService.getMembersByTeamId(team.getId()));
         Set<TeamIntervalCalendar> teamIntervalCalendars = new HashSet<>(teamIntervalCalendarService.getTeamIntervalsCalendarByTeam(team));
@@ -76,6 +78,12 @@ public class HomeController extends GenericController{
         newInterval.setTeam(team);
 
         teamIntervalCalendarService.create(newInterval);
+        try {
+            newInterval.setDates();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        teamIntervalCalendarService.update(newInterval);
         teamService.update(team);
 
         model.addAttribute("intervals", teamIntervalCalendarService.getDateListsOfIntervals(team));

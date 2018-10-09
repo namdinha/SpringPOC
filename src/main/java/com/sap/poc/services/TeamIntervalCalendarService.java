@@ -1,5 +1,6 @@
 package com.sap.poc.services;
 
+import com.sap.poc.models.CalendarDate;
 import com.sap.poc.models.Team;
 import com.sap.poc.models.TeamIntervalCalendar;
 
@@ -17,4 +18,5 @@ public interface TeamIntervalCalendarService {
     List<Date> getDateListOfInterval(TeamIntervalCalendar teamIntervalCalendar);
     List<TeamIntervalCalendar> getTeamIntervalCalendarByTeamId(int teamId);
     List<TeamIntervalCalendar> getTeamIntervalsCalendarByTeam(Team team);
+    List<List<CalendarDate>> getDateListsOfIntervals(Team team);
 }

@@ -1,6 +1,9 @@
 package com.sap.poc.services;
 
 import com.sap.poc.models.CalendarDate;
+import com.sap.poc.models.TeamIntervalCalendar;
+
+import java.util.List;
 
 public interface CalendarDateService {
 
@@ -9,4 +12,6 @@ public interface CalendarDateService {
     void update(CalendarDate calendarDate);
     void delete(CalendarDate calendarDate);
     CalendarDate getCalendarDateById(int id);
+
+    List<CalendarDate> getCalendarDatesByInterval(TeamIntervalCalendar teamIntervalCalendar);
 }

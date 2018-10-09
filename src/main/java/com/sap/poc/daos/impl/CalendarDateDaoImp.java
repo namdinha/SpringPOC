@@ -2,10 +2,16 @@ package com.sap.poc.daos.impl;
 
 import com.sap.poc.daos.CalendarDateDao;
 import com.sap.poc.models.CalendarDate;
+import com.sap.poc.models.TeamIntervalCalendar;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Transactional
 public class CalendarDateDaoImp extends HibernateDaoSupport implements CalendarDateDao {
@@ -41,4 +47,14 @@ public class CalendarDateDaoImp extends HibernateDaoSupport implements CalendarD
     public CalendarDate getCalendarDateById(int id) {
         return null;
     }
+
+    @Override
+    public List<CalendarDate> getCalendarDatesByInterval(TeamIntervalCalendar teamIntervalCalendar) {
+        try (Session session = sessionFactory.openSession()) {
+            DetachedCriteria criteria = DetachedCriteria.forClass(CalendarDate.class);
+            criteria.add(Restrictions.like("teamIntervalCalendar", teamIntervalCalendar));
+            return (List<CalendarDate>) criteria.getExecutableCriteria(session).list();
+        }
+    }
+
 }

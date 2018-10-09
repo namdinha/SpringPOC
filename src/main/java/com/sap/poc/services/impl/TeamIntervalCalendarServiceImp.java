@@ -1,11 +1,12 @@
 package com.sap.poc.services.impl;
 
 import com.sap.poc.daos.TeamIntervalCalendarDao;
+import com.sap.poc.models.CalendarDate;
 import com.sap.poc.models.Team;
 import com.sap.poc.models.TeamIntervalCalendar;
+import com.sap.poc.services.CalendarDateService;
 import com.sap.poc.services.TeamIntervalCalendarService;
 import com.sap.poc.services.TeamService;
-import com.sap.poc.services.UserService;
 
 import javax.annotation.Resource;
 import java.util.*;
@@ -17,7 +18,7 @@ public class TeamIntervalCalendarServiceImp implements TeamIntervalCalendarServi
     @Resource
     private TeamService teamService;
     @Resource
-    private UserService userService;
+    private CalendarDateService calendarDateService;
 
     public TeamIntervalCalendarServiceImp(TeamIntervalCalendarDao hibernateTeamIntervalCalendarDao) {
         this.hibernateTeamIntervalCalendarDao = hibernateTeamIntervalCalendarDao;
@@ -25,6 +26,9 @@ public class TeamIntervalCalendarServiceImp implements TeamIntervalCalendarServi
 
     @Override
     public void create(TeamIntervalCalendar teamIntervalCalendar) {
+        for(CalendarDate date:teamIntervalCalendar.getDates()){
+            calendarDateService.create(date);
+        }
         hibernateTeamIntervalCalendarDao.create(teamIntervalCalendar);
     }
 
@@ -35,6 +39,9 @@ public class TeamIntervalCalendarServiceImp implements TeamIntervalCalendarServi
 
     @Override
     public void update(TeamIntervalCalendar teamIntervalCalendar) {
+        for(CalendarDate date:teamIntervalCalendar.getDates()){
+            calendarDateService.create(date);
+        }
         hibernateTeamIntervalCalendarDao.update(teamIntervalCalendar);
     }
 
@@ -68,6 +75,18 @@ public class TeamIntervalCalendarServiceImp implements TeamIntervalCalendarServi
     @Override
     public List<TeamIntervalCalendar> getTeamIntervalsCalendarByTeam(Team team) {
         return hibernateTeamIntervalCalendarDao.getTeamIntervalsCalendarByTeam(team);
+    }
+
+    @Override
+    public List<List<CalendarDate>> getDateListsOfIntervals(Team team) {
+        List<TeamIntervalCalendar> intervals = this.getTeamIntervalsCalendarByTeam(team);
+        List<List<CalendarDate>> listOfIntervalListsOfDates = new ArrayList<>();
+        List<CalendarDate> dates;
+        for(TeamIntervalCalendar interval:intervals) {
+            dates = calendarDateService.getCalendarDatesByInterval(interval);
+            listOfIntervalListsOfDates.add(dates);
+        }
+        return listOfIntervalListsOfDates;
     }
 
 }
