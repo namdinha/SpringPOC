@@ -39,7 +39,7 @@ public class CalendarDateServiceImp implements CalendarDateService {
 
     @Override
     public CalendarDate getCalendarDateById(int id) {
-        return null;
+        return hibernateCalendarDateDao.getCalendarDateById(id);
     }
 
     @Override

@@ -1,6 +1,10 @@
 package com.sap.poc.services;
 
+import com.sap.poc.models.TeamMember;
 import com.sap.poc.models.TeamMemberShift;
+
+import java.util.List;
+import java.util.Set;
 
 public interface TeamMemberShiftService {
 
@@ -9,4 +13,7 @@ public interface TeamMemberShiftService {
     void update(TeamMemberShift teamMemberShift);
     void delete(TeamMemberShift teamMemberShift);
     TeamMemberShift getTeamMemberShiftById(int id);
+    void createShifts(Set<TeamMemberShift> shifts);
+    void createShiftsOfMembers(Set<TeamMember> members);
+    List<TeamMemberShift> getTeamMemberShiftsByMember(TeamMember member);
 }

@@ -45,7 +45,11 @@ public class CalendarDateDaoImp extends HibernateDaoSupport implements CalendarD
 
     @Override
     public CalendarDate getCalendarDateById(int id) {
-        return null;
+        try (Session session = sessionFactory.openSession()) {
+            DetachedCriteria criteria = DetachedCriteria.forClass(CalendarDate.class);
+            criteria.add(Restrictions.like("id", id));
+            return (CalendarDate) criteria.getExecutableCriteria(session).uniqueResult();
+        }
     }
 
     @Override

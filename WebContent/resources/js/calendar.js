@@ -1,25 +1,13 @@
 "use strict";
 
 function test(){
-    $.ajax({
-        method: "GET",
-        url: "/calendar/getTeamCalendar",
-        success: displayCalendar
-    });
-    function displayCalendar(calendars) {
-        $.ajax({
-            method: "GET",
-            url: "/calendar/getMemberShifts",
-            success: displayShifts
-        });
-        function displayShifts(shifts){
-            var data = initCalendar();
-            calendars.forEach(function (interval) {
-                console.log(interval);
-            })
-            return data;
-        }
-    }
+    var data = initCalendar();
+    // console.log(shifts);
+    // shifts.forEach(function (shift) {
+    //     console.log(shift.getDate());
+    // });
+    return data;
+
     function initCalendar() {
         var date = new Date();
         var data = {};
@@ -32,7 +20,6 @@ function test(){
         }
         return data;
     }
-
 };
 
 var data = test();

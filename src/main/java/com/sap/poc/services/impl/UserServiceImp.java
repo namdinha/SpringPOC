@@ -2,9 +2,7 @@ package com.sap.poc.services.impl;
 
 import com.sap.poc.daos.TeamDao;
 import com.sap.poc.daos.UserDao;
-import com.sap.poc.models.Team;
-import com.sap.poc.models.TeamMember;
-import com.sap.poc.models.User;
+import com.sap.poc.models.*;
 import com.sap.poc.services.TeamService;
 import com.sap.poc.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.annotation.Resource;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class UserServiceImp implements UserService, UserDetailsService {
 
@@ -80,5 +76,31 @@ public class UserServiceImp implements UserService, UserDetailsService {
         if(user == null)
             throw new UsernameNotFoundException(s);
         return user;
+    }
+
+    @Override
+    public void setShiftsToMembers(Set<TeamMember> members, Set<CalendarDate> dates) {
+        for(TeamMember member : members){
+            setShiftsToMember(member, dates);
+        }
+    }
+
+    @Override
+    public void setShiftsToMember(TeamMember member, Set<CalendarDate> dates) {
+        Set<TeamMemberShift> shifts = new HashSet<>();
+        TeamMemberShift shift;
+        for(CalendarDate date : dates){
+            shift = new TeamMemberShift(date);
+            shift.setMember(member);
+            shifts.add(shift);
+        }
+        member.setShifts(shifts);
+    }
+
+    @Override
+    public void updateTeamMembers(Set<TeamMember> members) {
+        for(TeamMember member : members) {
+            this.update(member);
+        }
     }
 }

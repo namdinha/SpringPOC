@@ -13,4 +13,6 @@ public interface TeamMemberShiftDao {
     void update(TeamMemberShift teamMemberShift);
     void delete(TeamMemberShift teamMemberShift);
     TeamMemberShift getTeamMemberShiftById(int id);
+
+    List<TeamMemberShift> getTeamMemberShiftsByMember(TeamMember member);
 }

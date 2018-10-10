@@ -85,6 +85,7 @@ public class TeamIntervalCalendarServiceImp implements TeamIntervalCalendarServi
         for(TeamIntervalCalendar interval:intervals) {
             dates = calendarDateService.getCalendarDatesByInterval(interval);
             listOfIntervalListsOfDates.add(dates);
+            Collections.sort(dates);
         }
         return listOfIntervalListsOfDates;
     }

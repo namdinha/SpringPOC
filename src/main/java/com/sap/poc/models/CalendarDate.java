@@ -12,6 +12,7 @@ import java.util.Date;
 public class CalendarDate implements Comparable<CalendarDate> {
 
     private static final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+    private static final SimpleDateFormat formatOut = new SimpleDateFormat("dd/MM/yyyy");
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +21,7 @@ public class CalendarDate implements Comparable<CalendarDate> {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Calendar date = Calendar.getInstance();
 
-    private boolean isHolidayOrWeekend;
+    private boolean isHolidayOrWeekend = false;
 
     @ManyToOne
     @JoinColumn(name = "teamIntervalCalendar_id")
@@ -58,6 +59,11 @@ public class CalendarDate implements Comparable<CalendarDate> {
         }
     }
 
+    public String HolidayOrWeekendToString() {
+        if(isHolidayOrWeekend) return "Holiday";
+        else return "Not Holiday";
+    }
+
     public TeamIntervalCalendar getTeamIntervalCalendar() {
         return teamIntervalCalendar;
     }
@@ -68,7 +74,7 @@ public class CalendarDate implements Comparable<CalendarDate> {
 
     @Override
     public String toString(){
-        return this.date.toString();
+        return formatOut.format(this.date.getTime());
     }
 
     @Override

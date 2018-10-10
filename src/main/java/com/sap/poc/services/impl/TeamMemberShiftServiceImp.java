@@ -1,11 +1,13 @@
 package com.sap.poc.services.impl;
 
 import com.sap.poc.daos.TeamMemberShiftDao;
+import com.sap.poc.models.TeamMember;
 import com.sap.poc.models.TeamMemberShift;
 import com.sap.poc.services.TeamMemberShiftService;
-import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.Set;
 
 public class TeamMemberShiftServiceImp implements TeamMemberShiftService {
 
@@ -38,6 +40,26 @@ public class TeamMemberShiftServiceImp implements TeamMemberShiftService {
 
     @Override
     public TeamMemberShift getTeamMemberShiftById(int id) {
-        return null;
+        return hibernateTeamMemberShiftDao.getTeamMemberShiftById(id);
     }
+
+    @Override
+    public void createShifts(Set<TeamMemberShift> shifts) {
+        for(TeamMemberShift shift : shifts) {
+            this.create(shift);
+        }
+    }
+
+    @Override
+    public void createShiftsOfMembers(Set<TeamMember> members) {
+        for(TeamMember member : members) {
+            this.createShifts(member.getShifts());
+        }
+    }
+
+    @Override
+    public List<TeamMemberShift> getTeamMemberShiftsByMember(TeamMember member) {
+        return hibernateTeamMemberShiftDao.getTeamMemberShiftsByMember(member);
+    }
+
 }

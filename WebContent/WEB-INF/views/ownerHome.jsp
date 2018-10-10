@@ -60,17 +60,21 @@
             </div>
             <button type="submit">Register</button>
         </form:form>
-        <%--<c:forEach items="${intervals}" var="interval">--%>
-            <%--<div>--%>
-                <%--<c:forEach items="${interval}" var="date">--%>
-                    <%--<div>--%>
-                            <%--${date.toString()}--%>
-                    <%--</div>--%>
-                <%--</c:forEach>--%>
-            <%--</div>--%>
-        <%--</c:forEach>--%>
+        <c:forEach items="${intervals}" var="interval">
+            <div>
+                <c:forEach items="${interval}" var="date">
+                    <div>
+                            ${date.toString()}
+                        <form:form action="/calendar/editHoliday" method="post" name="editedCalendarDate">
+                            <input hidden id="editedCalendarDateId" name="id" value="${date.id}">
+                            <button type="submit">${date.HolidayOrWeekendToString()}</button>
+                        </form:form>
+                    </div>
+                </c:forEach>
+            </div>
+        </c:forEach>
         <h1>Add New Interval</h1>
-        <form:form action="/interval/addInterval" method="post" name="newInterval">
+        <form:form action="/calendar/addInterval" method="post" name="newInterval">
             <div>
                 <input id="initDate" type="date" name="initDate">
             </div>

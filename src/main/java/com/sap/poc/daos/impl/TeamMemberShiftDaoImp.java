@@ -1,11 +1,17 @@
 package com.sap.poc.daos.impl;
 
 import com.sap.poc.daos.TeamMemberShiftDao;
+import com.sap.poc.models.TeamMember;
 import com.sap.poc.models.TeamMemberShift;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Transactional
 public class TeamMemberShiftDaoImp extends HibernateDaoSupport implements TeamMemberShiftDao {
@@ -39,6 +45,19 @@ public class TeamMemberShiftDaoImp extends HibernateDaoSupport implements TeamMe
 
     @Override
     public TeamMemberShift getTeamMemberShiftById(int id) {
-        return null;
+        try (Session session = sessionFactory.openSession()) {
+            DetachedCriteria criteria = DetachedCriteria.forClass(TeamMemberShift.class);
+            criteria.add(Restrictions.like("id", id));
+            return (TeamMemberShift) criteria.getExecutableCriteria(session).uniqueResult();
+        }
+    }
+
+    @Override
+    public List<TeamMemberShift> getTeamMemberShiftsByMember(TeamMember member) {
+        try (Session session = sessionFactory.openSession()) {
+            DetachedCriteria criteria = DetachedCriteria.forClass(TeamMemberShift.class);
+            criteria.add(Restrictions.like("member", member));
+            return (List<TeamMemberShift>) criteria.getExecutableCriteria(session).list();
+        }
     }
 }
