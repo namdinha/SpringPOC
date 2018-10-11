@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import java.security.Principal;
@@ -28,39 +29,39 @@ public class HomeController extends GenericController{
     private TeamMemberShiftService teamMemberShiftService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public String getHomePage() {
+    public ModelAndView getHomePage() {
         List<String> roleNames = new ArrayList<>();
         roleNames.add("OWNER");
         roleNames.add("MEMBER");
 
         roleService.createRolesIfNotCreated(roleNames);
 
-        return "homepage";
+        return new ModelAndView("homepage");
     }
 
     @RequestMapping(value="/ownerHome", method = RequestMethod.GET)
-    public String getOwnerHome(Model model, Principal principal) {
+    public ModelAndView getOwnerHome(Principal principal) {
+        ModelAndView modelAndView = new ModelAndView("ownerHome");
 
         TeamOwner owner = (TeamOwner) getLoggedUser(principal);
 
         Team team = teamService.getTeamByOwner(owner.getUsername());
 
-        model.addAttribute("members", getMembersList(principal));
-        model.addAttribute("intervals", teamIntervalCalendarService.getDateListsOfIntervals(team));
+        modelAndView.addObject("members", getMembersList(principal));
+        modelAndView.addObject("intervals", teamIntervalCalendarService.getDateListsOfIntervals(team));
 
-        return "ownerHome";
+        return modelAndView;
     }
 
     @RequestMapping(value="/memberHome", method = RequestMethod.GET)
-    public String getMemberHome(Model model, Principal principal) {
+    public ModelAndView getMemberHome(Principal principal) {
+        ModelAndView modelAndView = new ModelAndView("memberHome");
 
         TeamMember member = (TeamMember) getLoggedUser(principal);
 
-        List<TeamMemberShift> shifts = teamMemberShiftService.getTeamMemberShiftsByMember(member);
+        modelAndView.addObject("shifts", teamMemberShiftService.getTeamMemberShiftsByMember(member));
 
-        model.addAttribute("shifts", shifts);
-
-        return "memberHome";
+        return modelAndView;
     }
 
 

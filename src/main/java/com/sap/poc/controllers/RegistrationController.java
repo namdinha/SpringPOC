@@ -4,7 +4,6 @@ import com.sap.poc.models.*;
 import com.sap.poc.services.TeamService;
 import com.sap.poc.services.UserService;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
