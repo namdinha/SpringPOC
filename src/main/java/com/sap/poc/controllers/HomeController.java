@@ -3,7 +3,6 @@ package com.sap.poc.controllers;
 import com.sap.poc.models.*;
 import com.sap.poc.services.*;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -11,9 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Controller
 @RequestMapping(value = "/")

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import java.security.Principal;
@@ -29,45 +30,37 @@ public class CalendarController extends GenericController{
     private CalendarDateService calendarDateService;
 
     @RequestMapping(value = "/editShift", method = RequestMethod.POST)
-    public String editShift(Model model, Principal principal, TeamMemberShift editedShift){
-
-        TeamMember loggedMember = (TeamMember) getLoggedUser(principal);
+    public ModelAndView editShift(TeamMemberShift editedShift){
+        ModelAndView modelAndView = new ModelAndView("redirect:/memberHome");
 
         TeamMemberShift shift = teamMemberShiftService.getTeamMemberShiftById(editedShift.getId());
         shift.setShift(editedShift.getShift());
 
         teamMemberShiftService.update(shift);
 
-        List<TeamMemberShift> shifts = teamMemberShiftService.getTeamMemberShiftsByMember(loggedMember);
-
-        model.addAttribute("shifts", shifts);
-
-        return "memberHome";
+        return modelAndView;
     }
 
     @RequestMapping(value = "/editHoliday", method = RequestMethod.POST)
-    public String editHoliday(Model model, Principal principal, CalendarDate editedCalendarDate) {
-        TeamOwner loggedOwner = (TeamOwner) getLoggedUser(principal);
+    public ModelAndView editHoliday(CalendarDate editedCalendarDate) {
+        ModelAndView modelAndView = new ModelAndView("redirect:/ownerHome");
 
         CalendarDate date = calendarDateService.getCalendarDateById(editedCalendarDate.getId());
         date.setHolidayOrWeekend(!date.isHolidayOrWeekend());
 
         calendarDateService.update(date);
 
-        Team team = teamService.getTeamByOwner(loggedOwner.getUsername());
-        model.addAttribute("members", getMembersList(principal));
-        model.addAttribute("intervals", teamIntervalCalendarService.getDateListsOfIntervals(team));
-
-        return "ownerHome";
+        return modelAndView;
     }
 
     @RequestMapping(value = "/addInterval", method = RequestMethod.POST)
-    public String addInterval(Model model, Principal principal, TeamIntervalCalendar newInterval){
+    public ModelAndView addInterval(Principal principal, TeamIntervalCalendar newInterval){
+        ModelAndView modelAndView = new ModelAndView("redirect:/ownerHome");
 
         TeamOwner owner = (TeamOwner) getLoggedUser(principal);
 
         Team team = teamService.getTeamByOwner(owner.getUsername());
-        Set<TeamMember> members = team.getMembers();//new HashSet<>(userService.getMembersByTeamId(team.getId()));
+        Set<TeamMember> members = team.getMembers();
         Set<TeamIntervalCalendar> teamIntervalCalendars = new HashSet<>(teamIntervalCalendarService.getTeamIntervalsCalendarByTeam(team));
 
         team.setMembers(members);
@@ -88,9 +81,6 @@ public class CalendarController extends GenericController{
         teamMemberShiftService.createShiftsOfMembers(members);
         userService.updateTeamMembers(members);
 
-        model.addAttribute("members", getMembersList(principal));
-        model.addAttribute("intervals", teamIntervalCalendarService.getDateListsOfIntervals(team));
-
-        return "ownerHome";
+        return modelAndView;
     }
 }
