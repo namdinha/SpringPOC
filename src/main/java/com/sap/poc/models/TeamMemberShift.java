@@ -19,6 +19,8 @@ public class TeamMemberShift implements Comparable<TeamMemberShift> {
     @JoinColumn(name = "member_id")
     private TeamMember member;
 
+    private boolean isAvailable = true;
+
     public TeamMemberShift(CalendarDate date, Shift shift, TeamMember member) {
         this.date = date;
         this.shift = shift;
@@ -64,6 +66,14 @@ public class TeamMemberShift implements Comparable<TeamMemberShift> {
 
     public void setMember(TeamMember member) {
         this.member = member;
+    }
+
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
+    public void setAvailable(boolean available) {
+        isAvailable = available;
     }
 
     @Override

@@ -5,8 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.*;
 
 @Entity
 public class CalendarDate implements Comparable<CalendarDate> {
@@ -26,6 +25,13 @@ public class CalendarDate implements Comparable<CalendarDate> {
     @ManyToOne
     @JoinColumn(name = "teamIntervalCalendar_id")
     private TeamIntervalCalendar teamIntervalCalendar;
+
+    @ElementCollection
+    @CollectionTable(name = "CAPACITIES", joinColumns = @JoinColumn(name = "CalendarDate_id"))
+    private Map<Shift, Integer> capacity = new HashMap<>();
+
+    @OneToMany(mappedBy = "date")
+    private Set<TeamMemberShift> membersShifts = new HashSet<>();
 
     public int getId() {
         return id;

@@ -41,7 +41,9 @@ public class HomeController extends GenericController{
 
     @RequestMapping(value="/ownerHome", method = RequestMethod.GET)
     public String getOwnerHome(Model model, Principal principal) {
+
         TeamOwner owner = (TeamOwner) getLoggedUser(principal);
+
         Team team = teamService.getTeamByOwner(owner.getUsername());
 
         model.addAttribute("members", getMembersList(principal));
@@ -52,7 +54,9 @@ public class HomeController extends GenericController{
 
     @RequestMapping(value="/memberHome", method = RequestMethod.GET)
     public String getMemberHome(Model model, Principal principal) {
+
         TeamMember member = (TeamMember) getLoggedUser(principal);
+
         List<TeamMemberShift> shifts = teamMemberShiftService.getTeamMemberShiftsByMember(member);
 
         model.addAttribute("shifts", shifts);

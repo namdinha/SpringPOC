@@ -20,6 +20,19 @@ public class TeamIntervalCalendar {
     @JoinColumn(name = "team_id")
     private Team team;
 
+    @ElementCollection
+    @CollectionTable(name = "DEFAULTCAPACITIES", joinColumns = @JoinColumn(name = "teamIntervalCalendar_id"))
+    private Map<Shift, Integer> defaultCapacity = new HashMap<>();
+
+    @ElementCollection
+    @CollectionTable(name = "DEFAULTCAPACITIESONHOLIDAYS", joinColumns = @JoinColumn(name = "teamIntervalCalendar_id"))
+    private Map<Shift, Integer> defaultCapacityOnHolidays = new HashMap<>();
+
+    @ElementCollection
+    @CollectionTable(name = "SHIFTSALLOCATION", joinColumns = @JoinColumn(name = "teamIntervalCalendar_id"))
+    @MapKeyJoinColumn(name = "teamMemberShift_id")
+    private Map<TeamMemberShift, Shift> shiftsAllocation = new HashMap<>();
+
     public int getId() {
         return id;
     }
