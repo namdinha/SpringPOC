@@ -23,7 +23,7 @@ public class RegistrationController extends GenericController{
 
     @RequestMapping(method = RequestMethod.POST)
     public ModelAndView registerOwner(TeamOwner user) {
-        ModelAndView modelAndView = new ModelAndView("homepage");
+        ModelAndView modelAndView = new ModelAndView("redirect:/");
 
         Team team = new Team();
 
@@ -40,7 +40,7 @@ public class RegistrationController extends GenericController{
 
     @RequestMapping(value = "/member", method = RequestMethod.POST)
     public ModelAndView registerMember(TeamMember member, Principal principal) {
-        ModelAndView modelAndView = new ModelAndView("ownerHome");
+        ModelAndView modelAndView = new ModelAndView("redirect:/ownerHome");
 
         member.addRole(new Role("MEMBER"));
 
@@ -51,8 +51,6 @@ public class RegistrationController extends GenericController{
 
         userService.create(member);
         teamService.update(team);
-
-        modelAndView.addObject("members", getMembersList(principal));
 
         return modelAndView;
     }
