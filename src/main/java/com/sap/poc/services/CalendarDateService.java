@@ -14,4 +14,6 @@ public interface CalendarDateService {
     CalendarDate getCalendarDateById(int id);
 
     List<CalendarDate> getCalendarDatesByInterval(TeamIntervalCalendar teamIntervalCalendar);
+
+    void updateDates(List<CalendarDate> calendarDates);
 }

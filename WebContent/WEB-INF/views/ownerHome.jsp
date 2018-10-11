@@ -1,3 +1,4 @@
+<%@ page import="com.sap.poc.models.Shift" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
@@ -17,6 +18,9 @@
     <security:authorize access="isAuthenticated()">
         <security:authentication property="principal" var="owner"/>
         <h1>${owner.name}</h1>
+        <c:set var="ANY" value="<%=Shift.ANY%>"/>
+        <c:set var="DAY" value="<%=Shift.DAY%>"/>
+        <c:set var="NIGHT" value="<%=Shift.NIGHT%>"/>
         <form:form action="/edit" method="get" name="editOwner">
             <input type="hidden" id="editOwnerUsername" name="username" value="${owner.username}">
             <button type="submit">Edit</button>
@@ -80,6 +84,18 @@
             </div>
             <div>
                 <input id="endDate" type="date" name="endDate">
+            </div>
+            <div>
+                <input name="defaultCapacity['DAY']" type="number">
+            </div>
+            <div>
+                <input name="defaultCapacity['NIGHT']" type="number">
+            </div>
+            <div>
+                <input name="defaultCapacityOnHolidays['DAY']" type="number">
+            </div>
+            <div>
+                <input name="defaultCapacityOnHolidays['NIGHT']" type="number">
             </div>
             <button type="submit">Submit</button>
         </form:form>

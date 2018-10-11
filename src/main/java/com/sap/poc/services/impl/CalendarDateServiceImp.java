@@ -46,4 +46,11 @@ public class CalendarDateServiceImp implements CalendarDateService {
     public List<CalendarDate> getCalendarDatesByInterval(TeamIntervalCalendar teamIntervalCalendar){
         return hibernateCalendarDateDao.getCalendarDatesByInterval(teamIntervalCalendar);
     }
+
+    @Override
+    public void updateDates(List<CalendarDate> calendarDates){
+        for(CalendarDate date : calendarDates){
+            hibernateCalendarDateDao.update(date);
+        }
+    }
 }

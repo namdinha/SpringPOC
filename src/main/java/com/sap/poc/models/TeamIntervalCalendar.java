@@ -112,4 +112,32 @@ public class TeamIntervalCalendar {
             this.dates = dates;
         }
     }
+
+    public Map<Shift, Integer> getDefaultCapacity() {
+        return defaultCapacity;
+    }
+
+    public void setDefaultCapacity(Map<Shift, Integer> defaultCapacity) {
+        this.defaultCapacity.putAll(defaultCapacity);
+    }
+
+    public Map<Shift, Integer> getDefaultCapacityOnHolidays() {
+        return defaultCapacityOnHolidays;
+    }
+
+    public void setDefaultCapacityOnHolidays(Map<Shift, Integer> defaultCapacityOnHolidays) {
+        this.defaultCapacityOnHolidays = defaultCapacityOnHolidays;
+    }
+
+    public void setDefaultCapacityOnHolidays(Shift shift, Integer defaultCapacityOnHolidays) {
+        this.defaultCapacityOnHolidays.put(shift, defaultCapacityOnHolidays);
+    }
+
+    public Map<TeamMemberShift, Shift> getShiftsAllocation() {
+        return shiftsAllocation;
+    }
+
+    public void setShiftsAllocation(Map<TeamMemberShift, Shift> shiftsAllocation) {
+        this.shiftsAllocation = shiftsAllocation;
+    }
 }

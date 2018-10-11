@@ -78,6 +78,30 @@ public class CalendarDate implements Comparable<CalendarDate> {
         this.teamIntervalCalendar = teamIntervalCalendar;
     }
 
+    public Map<Shift, Integer> getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(Map<Shift, Integer> capacity) {
+        this.capacity = capacity;
+    }
+
+    public void addCapacity(Shift shift, Integer capacity){
+        this.capacity.put(shift, capacity);
+    }
+
+    public Set<TeamMemberShift> getMembersShifts() {
+        return membersShifts;
+    }
+
+    public void setMembersShifts(Set<TeamMemberShift> membersShifts) {
+        this.membersShifts = membersShifts;
+    }
+
+    public void addMemberShift(TeamMemberShift memberShift){
+        this.membersShifts.add(memberShift);
+    }
+
     @Override
     public String toString(){
         return formatOut.format(this.date.getTime());

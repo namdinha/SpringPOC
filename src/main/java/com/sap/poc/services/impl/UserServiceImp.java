@@ -92,6 +92,7 @@ public class UserServiceImp implements UserService, UserDetailsService {
         for(CalendarDate date : dates){
             shift = new TeamMemberShift(date);
             shift.setMember(member);
+            date.addMemberShift(shift);
             shifts.add(shift);
         }
         member.setShifts(shifts);

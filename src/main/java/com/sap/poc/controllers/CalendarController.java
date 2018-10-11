@@ -58,7 +58,6 @@ public class CalendarController extends GenericController{
         ModelAndView modelAndView = new ModelAndView("redirect:/ownerHome");
 
         TeamOwner owner = (TeamOwner) getLoggedUser(principal);
-
         Team team = teamService.getTeamByOwner(owner.getUsername());
         Set<TeamMember> members = team.getMembers();
         Set<TeamIntervalCalendar> teamIntervalCalendars = new HashSet<>(teamIntervalCalendarService.getTeamIntervalsCalendarByTeam(team));
@@ -69,11 +68,13 @@ public class CalendarController extends GenericController{
         newInterval.setTeam(team);
 
         teamIntervalCalendarService.create(newInterval);
+
         try {
             newInterval.setDates();
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         teamIntervalCalendarService.update(newInterval);
         teamService.update(team);
 
