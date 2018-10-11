@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import java.security.Principal;
@@ -21,7 +22,9 @@ public class RegistrationController extends GenericController{
     private TeamService teamService;
 
     @RequestMapping(method = RequestMethod.POST)
-    public String registerOwner(Model model, TeamOwner user, Principal principal) {
+    public ModelAndView registerOwner(TeamOwner user) {
+        ModelAndView modelAndView = new ModelAndView("homepage");
+
         Team team = new Team();
 
         user.addRole(new Role("OWNER"));
@@ -32,13 +35,13 @@ public class RegistrationController extends GenericController{
         userService.create(user);
         teamService.create(team);
 
-        model.addAttribute("members", getMembersList(principal));
-
-        return "homepage";
+        return modelAndView;
     }
 
     @RequestMapping(value = "/member", method = RequestMethod.POST)
-    public String registerMember(Model model, TeamMember member, Principal principal) {
+    public ModelAndView registerMember(TeamMember member, Principal principal) {
+        ModelAndView modelAndView = new ModelAndView("ownerHome");
+
         member.addRole(new Role("MEMBER"));
 
         TeamOwner owner = (TeamOwner) getLoggedUser(principal);
@@ -49,8 +52,8 @@ public class RegistrationController extends GenericController{
         userService.create(member);
         teamService.update(team);
 
-        model.addAttribute("members", getMembersList(principal));
+        modelAndView.addObject("members", getMembersList(principal));
 
-        return "ownerHome";
+        return modelAndView;
     }
 }

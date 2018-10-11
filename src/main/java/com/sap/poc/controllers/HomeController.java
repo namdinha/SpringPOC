@@ -25,8 +25,6 @@ public class HomeController extends GenericController{
     @Resource
     private TeamService teamService;
     @Resource
-    private UserService userService;
-    @Resource
     private TeamMemberShiftService teamMemberShiftService;
 
     @RequestMapping(method = RequestMethod.GET)
@@ -34,6 +32,7 @@ public class HomeController extends GenericController{
         List<String> roleNames = new ArrayList<>();
         roleNames.add("OWNER");
         roleNames.add("MEMBER");
+
         roleService.createRolesIfNotCreated(roleNames);
 
         return "homepage";

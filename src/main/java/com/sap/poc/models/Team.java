@@ -22,6 +22,9 @@ public class Team {
     @OneToMany(mappedBy = "team")
     private Set<TeamIntervalCalendar> intervalCalendars = new HashSet<>();
 
+    @OneToMany(mappedBy = "team")
+    private Set<Notification> notifications;
+
     public Team(){
         owner = null;
     }
