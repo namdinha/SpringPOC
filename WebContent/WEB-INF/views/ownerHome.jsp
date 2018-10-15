@@ -71,7 +71,15 @@
                             ${date.toString()}
                         <form:form action="/calendar/editHoliday" method="post" name="editedCalendarDate">
                             <input hidden id="editedCalendarDateId" name="id" value="${date.id}">
-                            <button type="submit">${date.HolidayOrWeekendToString()}</button>
+                            ${date.HolidayOrWeekendToString()}
+                            <button type="submit">Change</button>
+                        </form:form>
+                        <form:form action="/calendar/editDateCapacity" method="post" name="editedCalendarDate">
+                            <input hidden name="id" value="${date.id}">
+                            ${date.capacity}
+                            <input id="editedCalendarDateDayCapacity" name="capacity['DAY']" type="number">
+                            <input id="editedCalendarDateNightCapacity" name="capacity['NIGHT']" type="number">
+                            <button type="submit">Set Capacities</button>
                         </form:form>
                     </div>
                 </c:forEach>
@@ -100,7 +108,5 @@
             <button type="submit">Submit</button>
         </form:form>
     </security:authorize>
-
-
 </body>
 </html>

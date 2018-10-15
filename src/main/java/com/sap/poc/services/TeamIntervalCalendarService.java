@@ -15,7 +15,6 @@ public interface TeamIntervalCalendarService {
     void delete(TeamIntervalCalendar teamIntervalCalendar);
     TeamIntervalCalendar getTeamIntervalCalendarById(int id);
     int getIntervalSize(TeamIntervalCalendar teamIntervalCalendar);
-    List<Date> getDateListOfInterval(TeamIntervalCalendar teamIntervalCalendar);
     List<TeamIntervalCalendar> getTeamIntervalCalendarByTeamId(int teamId);
     List<TeamIntervalCalendar> getTeamIntervalsCalendarByTeam(Team team);
     List<List<CalendarDate>> getDateListsOfIntervals(Team team);

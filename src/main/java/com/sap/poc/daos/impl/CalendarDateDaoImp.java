@@ -2,6 +2,7 @@ package com.sap.poc.daos.impl;
 
 import com.sap.poc.daos.CalendarDateDao;
 import com.sap.poc.models.CalendarDate;
+import com.sap.poc.models.Shift;
 import com.sap.poc.models.TeamIntervalCalendar;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,6 +13,7 @@ import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @Transactional
 public class CalendarDateDaoImp extends HibernateDaoSupport implements CalendarDateDao {

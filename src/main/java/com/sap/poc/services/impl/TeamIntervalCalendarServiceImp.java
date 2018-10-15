@@ -61,12 +61,6 @@ public class TeamIntervalCalendarServiceImp implements TeamIntervalCalendarServi
     }
 
     @Override
-    public List<Date> getDateListOfInterval(TeamIntervalCalendar teamIntervalCalendar) {
-        List<Date> dates = new ArrayList<>();
-        return dates;
-    }
-
-    @Override
     public List<TeamIntervalCalendar> getTeamIntervalCalendarByTeamId(int teamId) {
         Team team = teamService.getTeamById(teamId);
         return hibernateTeamIntervalCalendarDao.getTeamIntervalsCalendarByTeam(team);

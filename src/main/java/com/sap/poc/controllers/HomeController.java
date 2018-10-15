@@ -44,8 +44,10 @@ public class HomeController extends GenericController{
 
         Team team = teamService.getTeamByOwner(owner.getUsername());
 
+        List<List<CalendarDate>> intervals = teamIntervalCalendarService.getDateListsOfIntervals(team);
+
         modelAndView.addObject("members", getMembersList(principal));
-        modelAndView.addObject("intervals", teamIntervalCalendarService.getDateListsOfIntervals(team));
+        modelAndView.addObject("intervals", intervals);
 
         return modelAndView;
     }

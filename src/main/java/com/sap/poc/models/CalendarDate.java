@@ -26,7 +26,7 @@ public class CalendarDate implements Comparable<CalendarDate> {
     @JoinColumn(name = "teamIntervalCalendar_id")
     private TeamIntervalCalendar teamIntervalCalendar;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "CAPACITIES", joinColumns = @JoinColumn(name = "CalendarDate_id"))
     private Map<Shift, Integer> capacity = new HashMap<>();
 

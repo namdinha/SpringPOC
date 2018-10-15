@@ -84,4 +84,16 @@ public class CalendarController extends GenericController{
 
         return modelAndView;
     }
+
+    @RequestMapping(value = "/editDateCapacity", method = RequestMethod.POST)
+    public ModelAndView editDateCapacity(Principal principal, CalendarDate editedCalendarDate) {
+        ModelAndView modelAndView = new ModelAndView("redirect:/ownerHome");
+
+        CalendarDate date = calendarDateService.getCalendarDateById(editedCalendarDate.getId());
+        date.setCapacity(editedCalendarDate.getCapacity());
+
+        calendarDateService.update(date);
+
+        return modelAndView;
+    }
 }
