@@ -13,7 +13,7 @@ public class TeamMemberShift implements Comparable<TeamMemberShift> {
     @JoinColumn(name = "date_id")
     private CalendarDate date;
 
-    private Shift shift = Shift.ANY;
+    private Shift desiredShift = Shift.ANY;
 
     @ManyToOne
     @JoinColumn(name = "member_id")
@@ -21,9 +21,11 @@ public class TeamMemberShift implements Comparable<TeamMemberShift> {
 
     private boolean isAvailable = true;
 
-    public TeamMemberShift(CalendarDate date, Shift shift, TeamMember member) {
+    private Shift allocatedShift;
+
+    public TeamMemberShift(CalendarDate date, Shift desiredShift, TeamMember member) {
         this.date = date;
-        this.shift = shift;
+        this.desiredShift = desiredShift;
         this.member = member;
     }
 
@@ -52,12 +54,12 @@ public class TeamMemberShift implements Comparable<TeamMemberShift> {
         this.date = date;
     }
 
-    public Shift getShift() {
-        return shift;
+    public Shift getDesiredShift() {
+        return desiredShift;
     }
 
-    public void setShift(Shift shift) {
-        this.shift = shift;
+    public void setDesiredShift(Shift desiredShift) {
+        this.desiredShift = desiredShift;
     }
 
     public TeamMember getMember() {
@@ -74,6 +76,14 @@ public class TeamMemberShift implements Comparable<TeamMemberShift> {
 
     public void setAvailable(boolean available) {
         isAvailable = available;
+    }
+
+    public Shift getAllocatedShift() {
+        return allocatedShift;
+    }
+
+    public void setAllocatedShift(Shift allocatedShift) {
+        this.allocatedShift = allocatedShift;
     }
 
     @Override

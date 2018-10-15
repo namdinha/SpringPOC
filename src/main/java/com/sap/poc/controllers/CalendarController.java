@@ -34,7 +34,7 @@ public class CalendarController extends GenericController{
         ModelAndView modelAndView = new ModelAndView("redirect:/memberHome");
 
         TeamMemberShift shift = teamMemberShiftService.getTeamMemberShiftById(editedShift.getId());
-        shift.setShift(editedShift.getShift());
+        shift.setDesiredShift(editedShift.getDesiredShift());
 
         teamMemberShiftService.update(shift);
 
