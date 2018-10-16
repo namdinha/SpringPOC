@@ -29,16 +29,25 @@
                 <div id="${shift.id}">
                     ${shift.date.toString()}
                     ${shift.desiredShift}
-                    <form:form action="/calendar/editShift" method="post" name="editedShift">
+                    ${shift.allocatedShift}
+                    ${shift.isAvailableToString()}
+                    <form:form action="/calendar/changeAvailability" method="post" name="editedShift">
                         <input type="hidden" id="editedShiftId" name="id" value="${shift.id}">
-                        <select name="desiredShift">
-                            <option disabled selected>Select</option>
-                            <option value="ANY">ANY</option>
-                            <option value="DAY">DAY</option>
-                            <option value="NIGHT">NIGHT</option>
-                        </select>
-                        <button type="submit">Edit</button>
+                        <button type="submit">Change Availability</button>
                     </form:form>
+                    <c:set var="availability" scope="session" value="${shift.available}"/>
+                    <c:if test="${availability == true}">
+                        <form:form action="/calendar/editShift" method="post" name="editedShift">
+                            <input type="hidden" id="editedShiftId" name="id" value="${shift.id}">
+                            <select name="desiredShift">
+                                <option disabled selected>Select</option>
+                                <option value="ANY">ANY</option>
+                                <option value="DAY">DAY</option>
+                                <option value="NIGHT">NIGHT</option>
+                            </select>
+                            <button type="submit">Edit</button>
+                        </form:form>
+                    </c:if>
                 </div>
             </c:forEach>
         </div>

@@ -67,8 +67,9 @@ public class GreedyAllocator implements Allocator {
     }
 
     private Shift chooseShift(CalendarDate date) throws Exception {
-        Map<Shift, Integer> usedCapacity = date.getUsedCapacity();
-        Map<Shift, Integer> capacity = date.getCapacity();
+        CalendarDate reloadedDate = calendarDateService.getCalendarDateById(date.getId());
+        Map<Shift, Integer> usedCapacity = reloadedDate.getUsedCapacity();
+        Map<Shift, Integer> capacity = reloadedDate.getCapacity();
         for(Shift shift : Shift.getValidShifts()) {
             if(usedCapacity.get(shift) < capacity.get(shift))
                 return shift;

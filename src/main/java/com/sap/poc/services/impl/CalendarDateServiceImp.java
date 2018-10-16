@@ -4,13 +4,15 @@ import com.sap.poc.daos.CalendarDateDao;
 import com.sap.poc.models.CalendarDate;
 import com.sap.poc.models.Shift;
 import com.sap.poc.models.TeamIntervalCalendar;
+import com.sap.poc.models.TeamMemberShift;
 import com.sap.poc.services.CalendarDateService;
 import com.sap.poc.services.TeamMemberShiftService;
+import com.sap.poc.services.UserService;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 
 public class CalendarDateServiceImp implements CalendarDateService {
 
@@ -18,6 +20,8 @@ public class CalendarDateServiceImp implements CalendarDateService {
     private CalendarDateDao hibernateCalendarDateDao;
     @Resource
     private TeamMemberShiftService teamMemberShiftService;
+    @Resource
+    private UserService userService;
 
     public CalendarDateServiceImp(CalendarDateDao hibernateCalendarDateDao) {
         this.hibernateCalendarDateDao = hibernateCalendarDateDao;
@@ -50,7 +54,11 @@ public class CalendarDateServiceImp implements CalendarDateService {
 
     @Override
     public List<CalendarDate> getCalendarDatesByInterval(TeamIntervalCalendar teamIntervalCalendar){
-        return hibernateCalendarDateDao.getCalendarDatesByInterval(teamIntervalCalendar);
+        List<CalendarDate> dates = hibernateCalendarDateDao.getCalendarDatesByInterval(teamIntervalCalendar);
+        for(CalendarDate date : dates) {
+            date.setMembersShifts(new HashSet<>(teamMemberShiftService.getTeamMemberShiftsByCalendarDate(date)));
+        }
+        return dates;
     }
 
     @Override
@@ -63,11 +71,14 @@ public class CalendarDateServiceImp implements CalendarDateService {
     @Override
     public void changeHolidayOrWeekend(CalendarDate calendarDate) {
         calendarDate.setHolidayOrWeekend(!calendarDate.isHolidayOrWeekend());
-        if(calendarDate.isHolidayOrWeekend())
+        if(calendarDate.isHolidayOrWeekend()) {
             calendarDate.setCapacity(calendarDate.getTeamIntervalCalendar().getDefaultCapacityOnHolidays());
-        else
+            teamMemberShiftService.changeAvailabilityByDate(calendarDate, false);
+        }
+        else {
             calendarDate.setCapacity(calendarDate.getTeamIntervalCalendar().getDefaultCapacity());
-        teamMemberShiftService.changeAvailabilityByDate(calendarDate);
+            teamMemberShiftService.changeAvailabilityByDate(calendarDate, true);
+        }
         calendarDate.setUsedCapacityToZero();
 
         this.update(calendarDate);

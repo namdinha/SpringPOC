@@ -68,7 +68,14 @@
             <div>
                 <c:forEach items="${interval}" var="date">
                     <div>
-                            ${date.toString()}
+                        ${date.toString()}
+                        <c:forEach items="${date.membersShifts}" var="shift">
+                            <c:set var="availability" scope="session" value="${shift.available}"/>
+                            <c:if test="${availability == true}">
+                                ${shift.member.name}
+                                ${shift.allocatedShift}
+                            </c:if>
+                        </c:forEach>
                         <form:form action="/calendar/editHoliday" method="post" name="editedCalendarDate">
                             <input hidden id="editedCalendarDateId" name="id" value="${date.id}">
                             ${date.HolidayOrWeekendToString()}
@@ -77,8 +84,8 @@
                         <form:form action="/calendar/editDateCapacity" method="post" name="editedCalendarDate">
                             <input hidden name="id" value="${date.id}">
                             ${date.capacity}
-                            <input id="editedCalendarDateDayCapacity" name="capacity['DAY']" type="number">
-                            <input id="editedCalendarDateNightCapacity" name="capacity['NIGHT']" type="number">
+                            <input id="editedCalendarDateDayCapacity" name="capacity['DAY']" type="number" min="0">
+                            <input id="editedCalendarDateNightCapacity" name="capacity['NIGHT']" type="number" min="0">
                             <button type="submit">Set Capacities</button>
                         </form:form>
                     </div>
@@ -94,16 +101,16 @@
                 <input id="endDate" type="date" name="endDate">
             </div>
             <div>
-                <input name="defaultCapacity['DAY']" type="number">
+                <input name="defaultCapacity['DAY']" type="number" min="0">
             </div>
             <div>
-                <input name="defaultCapacity['NIGHT']" type="number">
+                <input name="defaultCapacity['NIGHT']" type="number" min="0">
             </div>
             <div>
-                <input name="defaultCapacityOnHolidays['DAY']" type="number">
+                <input name="defaultCapacityOnHolidays['DAY']" type="number" min="0">
             </div>
             <div>
-                <input name="defaultCapacityOnHolidays['NIGHT']" type="number">
+                <input name="defaultCapacityOnHolidays['NIGHT']" type="number" min="0">
             </div>
             <button type="submit">Submit</button>
         </form:form>

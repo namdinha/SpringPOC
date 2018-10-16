@@ -122,7 +122,7 @@ public class CalendarDate implements Comparable<CalendarDate> {
     }
 
     public void addUsedCapacity(Shift shift) {
-        this.usedCapacity.replace(shift, usedCapacity.get(shift) + 1);
+        this.usedCapacity.replace(shift, this.usedCapacity.get(shift) + 1);
     }
 
     public void setUsedCapacityToZero() {

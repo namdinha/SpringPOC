@@ -17,5 +17,5 @@ public interface TeamMemberShiftDao {
 
     List<TeamMemberShift> getTeamMemberShiftsByMember(TeamMember member);
 
-    List<TeamMemberShift> getTeamMemberShiftByCalendarDate(CalendarDate calendarDate);
+    List<TeamMemberShift> getTeamMemberShiftsByCalendarDate(CalendarDate calendarDate);
 }

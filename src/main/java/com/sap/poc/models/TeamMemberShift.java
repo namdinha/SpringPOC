@@ -86,6 +86,11 @@ public class TeamMemberShift implements Comparable<TeamMemberShift> {
         this.allocatedShift = allocatedShift;
     }
 
+    public String isAvailableToString() {
+        if(isAvailable) return "Available";
+        else return "Not Available";
+    }
+
     @Override
     public int compareTo(TeamMemberShift o) {
         return this.getDate().compareTo(o.getDate());

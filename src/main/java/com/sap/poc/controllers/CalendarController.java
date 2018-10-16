@@ -108,13 +108,29 @@ public class CalendarController extends GenericController{
     }
 
     @RequestMapping(value = "/editDateCapacity", method = RequestMethod.POST)
-    public ModelAndView editDateCapacity(Principal principal, CalendarDate editedCalendarDate) {
+    public ModelAndView editDateCapacity(CalendarDate editedCalendarDate) {
         ModelAndView modelAndView = new ModelAndView("redirect:/calendar/allocate");
 
         CalendarDate date = calendarDateService.getCalendarDateById(editedCalendarDate.getId());
         date.setCapacity(editedCalendarDate.getCapacity());
 
         calendarDateService.update(date);
+
+        modelAndView.addObject("teamId", date.getTeamIntervalCalendar().getTeam().getId());
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/changeAvailability", method = RequestMethod.POST)
+    public ModelAndView changeAvailability(Principal principal, TeamMemberShift editedShift) {
+        ModelAndView modelAndView = new ModelAndView("redirect:/calendar/allocate");
+
+        TeamMemberShift teamMemberShift = teamMemberShiftService.getTeamMemberShiftById(editedShift.getId());
+        teamMemberShift.setAvailable(!teamMemberShift.isAvailable());
+
+        teamMemberShiftService.update(teamMemberShift);
+
+        modelAndView.addObject("teamId", teamMemberShift.getDate().getTeamIntervalCalendar().getTeam().getId());
 
         return modelAndView;
     }

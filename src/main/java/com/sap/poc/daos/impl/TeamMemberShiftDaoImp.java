@@ -37,6 +37,7 @@ public class TeamMemberShiftDaoImp extends HibernateDaoSupport implements TeamMe
 
     @Override
     public void update(TeamMemberShift teamMemberShift) {
+        getHibernateTemplate().clear();
         getHibernateTemplate().update(teamMemberShift);
     }
 
@@ -65,7 +66,7 @@ public class TeamMemberShiftDaoImp extends HibernateDaoSupport implements TeamMe
     }
 
     @Override
-    public List<TeamMemberShift> getTeamMemberShiftByCalendarDate(CalendarDate calendarDate) {
+    public List<TeamMemberShift> getTeamMemberShiftsByCalendarDate(CalendarDate calendarDate) {
         try (Session session = sessionFactory.openSession()) {
             DetachedCriteria criteria = DetachedCriteria.forClass(TeamMemberShift.class);
             criteria.add(Restrictions.like("date", calendarDate));
