@@ -1,5 +1,6 @@
 package com.sap.poc.services;
 
+import com.sap.poc.models.CalendarDate;
 import com.sap.poc.models.TeamMember;
 import com.sap.poc.models.TeamMemberShift;
 
@@ -16,4 +17,8 @@ public interface TeamMemberShiftService {
     void createShifts(Set<TeamMemberShift> shifts);
     void createShiftsOfMembers(Set<TeamMember> members);
     List<TeamMemberShift> getTeamMemberShiftsByMember(TeamMember member);
+
+    void changeAvailabilityByDate(CalendarDate date);
+
+    void updateShiftsByMembers(List<TeamMember> members);
 }

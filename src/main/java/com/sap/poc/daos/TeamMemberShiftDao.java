@@ -1,5 +1,6 @@
 package com.sap.poc.daos;
 
+import com.sap.poc.models.CalendarDate;
 import com.sap.poc.models.Team;
 import com.sap.poc.models.TeamMember;
 import com.sap.poc.models.TeamMemberShift;
@@ -15,4 +16,6 @@ public interface TeamMemberShiftDao {
     TeamMemberShift getTeamMemberShiftById(int id);
 
     List<TeamMemberShift> getTeamMemberShiftsByMember(TeamMember member);
+
+    List<TeamMemberShift> getTeamMemberShiftByCalendarDate(CalendarDate calendarDate);
 }

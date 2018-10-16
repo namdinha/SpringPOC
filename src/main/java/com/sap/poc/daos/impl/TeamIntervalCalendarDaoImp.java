@@ -4,6 +4,7 @@ import com.sap.poc.daos.TeamIntervalCalendarDao;
 import com.sap.poc.models.Team;
 import com.sap.poc.models.TeamIntervalCalendar;
 import com.sap.poc.models.User;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
@@ -64,6 +65,7 @@ public class TeamIntervalCalendarDaoImp extends HibernateDaoSupport implements T
         try (Session session = sessionFactory.openSession()) {
             DetachedCriteria criteria = DetachedCriteria.forClass(TeamIntervalCalendar.class);
             criteria.add(Restrictions.like("team", team));
+            criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
             return (List<TeamIntervalCalendar>) criteria.getExecutableCriteria(session).list();
         }
     }

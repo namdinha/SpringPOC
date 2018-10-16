@@ -1,8 +1,10 @@
 package com.sap.poc.daos.impl;
 
 import com.sap.poc.daos.TeamMemberShiftDao;
+import com.sap.poc.models.CalendarDate;
 import com.sap.poc.models.TeamMember;
 import com.sap.poc.models.TeamMemberShift;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
@@ -57,6 +59,16 @@ public class TeamMemberShiftDaoImp extends HibernateDaoSupport implements TeamMe
         try (Session session = sessionFactory.openSession()) {
             DetachedCriteria criteria = DetachedCriteria.forClass(TeamMemberShift.class);
             criteria.add(Restrictions.like("member", member));
+            criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+            return (List<TeamMemberShift>) criteria.getExecutableCriteria(session).list();
+        }
+    }
+
+    @Override
+    public List<TeamMemberShift> getTeamMemberShiftByCalendarDate(CalendarDate calendarDate) {
+        try (Session session = sessionFactory.openSession()) {
+            DetachedCriteria criteria = DetachedCriteria.forClass(TeamMemberShift.class);
+            criteria.add(Restrictions.like("date", calendarDate));
             return (List<TeamMemberShift>) criteria.getExecutableCriteria(session).list();
         }
     }

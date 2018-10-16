@@ -1,9 +1,6 @@
 package com.sap.poc.controllers;
 
-import com.sap.poc.models.Team;
-import com.sap.poc.models.TeamMember;
-import com.sap.poc.models.TeamOwner;
-import com.sap.poc.models.User;
+import com.sap.poc.models.*;
 import com.sap.poc.services.TeamService;
 import com.sap.poc.services.UserService;
 import org.springframework.stereotype.Controller;
@@ -12,7 +9,9 @@ import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public abstract class GenericController {
@@ -43,5 +42,10 @@ public abstract class GenericController {
         Team team = teamService.getTeamByOwner(owner.getUsername());
 
         return new ArrayList<>(userService.getMembersByTeamId(team.getId()));
+    }
+
+    protected String getUserType(Principal principal) {
+        List<Role> roles = new ArrayList<>(userService.getUserByLogin(principal.getName()).getRoles());
+        return roles.get(0).getRoleName();
     }
 }

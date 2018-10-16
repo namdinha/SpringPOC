@@ -1,6 +1,7 @@
 package com.sap.poc.services.impl;
 
 import com.sap.poc.daos.TeamMemberShiftDao;
+import com.sap.poc.models.CalendarDate;
 import com.sap.poc.models.TeamMember;
 import com.sap.poc.models.TeamMemberShift;
 import com.sap.poc.services.TeamMemberShiftService;
@@ -62,4 +63,22 @@ public class TeamMemberShiftServiceImp implements TeamMemberShiftService {
         return hibernateTeamMemberShiftDao.getTeamMemberShiftsByMember(member);
     }
 
+    @Override
+    public void changeAvailabilityByDate(CalendarDate date) {
+        List<TeamMemberShift> shifts = hibernateTeamMemberShiftDao.getTeamMemberShiftByCalendarDate(date);
+        for (TeamMemberShift shift : shifts) {
+            shift.setAvailable(false);
+            shift.setAllocatedShift(null);
+            this.update(shift);
+        }
+    }
+
+    @Override
+    public void updateShiftsByMembers(List<TeamMember> members) {
+        for(TeamMember member : members) {
+            for(TeamMemberShift shift : member.getShifts()) {
+                this.update(shift);
+            }
+        }
+    }
 }

@@ -20,18 +20,13 @@ public class TeamIntervalCalendar {
     @JoinColumn(name = "team_id")
     private Team team;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "DEFAULTCAPACITIES", joinColumns = @JoinColumn(name = "teamIntervalCalendar_id"))
     private Map<Shift, Integer> defaultCapacity = new HashMap<>();
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "DEFAULTCAPACITIESONHOLIDAYS", joinColumns = @JoinColumn(name = "teamIntervalCalendar_id"))
     private Map<Shift, Integer> defaultCapacityOnHolidays = new HashMap<>();
-
-    @ElementCollection
-    @CollectionTable(name = "SHIFTSALLOCATION", joinColumns = @JoinColumn(name = "teamIntervalCalendar_id"))
-    @MapKeyJoinColumn(name = "teamMemberShift_id")
-    private Map<TeamMemberShift, Shift> shiftsAllocation = new HashMap<>();
 
     public int getId() {
         return id;
@@ -126,18 +121,10 @@ public class TeamIntervalCalendar {
     }
 
     public void setDefaultCapacityOnHolidays(Map<Shift, Integer> defaultCapacityOnHolidays) {
-        this.defaultCapacityOnHolidays = defaultCapacityOnHolidays;
+        this.defaultCapacityOnHolidays.putAll(defaultCapacityOnHolidays);
     }
 
     public void setDefaultCapacityOnHolidays(Shift shift, Integer defaultCapacityOnHolidays) {
         this.defaultCapacityOnHolidays.put(shift, defaultCapacityOnHolidays);
-    }
-
-    public Map<TeamMemberShift, Shift> getShiftsAllocation() {
-        return shiftsAllocation;
-    }
-
-    public void setShiftsAllocation(Map<TeamMemberShift, Shift> shiftsAllocation) {
-        this.shiftsAllocation = shiftsAllocation;
     }
 }

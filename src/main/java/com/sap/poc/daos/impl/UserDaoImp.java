@@ -2,10 +2,13 @@ package com.sap.poc.daos.impl;
 
 import com.sap.poc.daos.UserDao;
 import com.sap.poc.models.Team;
+import com.sap.poc.models.TeamIntervalCalendar;
 import com.sap.poc.models.TeamMember;
 import com.sap.poc.models.User;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;

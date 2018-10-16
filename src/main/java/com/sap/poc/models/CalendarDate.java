@@ -30,7 +30,7 @@ public class CalendarDate implements Comparable<CalendarDate> {
     @CollectionTable(name = "CAPACITIES", joinColumns = @JoinColumn(name = "CalendarDate_id"))
     private Map<Shift, Integer> capacity = new HashMap<>();
 
-    @ElementCollection(fetch = FetchType.LAZY)
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "USEDCAPACITIES", joinColumns = @JoinColumn(name = "CalendarDate_id"))
     private Map<Shift, Integer> usedCapacity = new HashMap<>();
 
@@ -38,7 +38,8 @@ public class CalendarDate implements Comparable<CalendarDate> {
     private Set<TeamMemberShift> membersShifts = new HashSet<>();
 
     public CalendarDate() {
-        for(Shift shift : Shift.values()) {
+        for(Shift shift : Shift.getValidShifts()) {
+            capacity.put(shift, 0);
             usedCapacity.put(shift, 0);
         }
     }
@@ -93,7 +94,7 @@ public class CalendarDate implements Comparable<CalendarDate> {
     }
 
     public void setCapacity(Map<Shift, Integer> capacity) {
-        this.capacity = capacity;
+        this.capacity.putAll(capacity);
     }
 
     public void addCapacity(Shift shift, Integer capacity){
@@ -121,7 +122,14 @@ public class CalendarDate implements Comparable<CalendarDate> {
     }
 
     public void addUsedCapacity(Shift shift) {
-        this.usedCapacity.compute(shift, (key, value) -> value++);
+        this.usedCapacity.replace(shift, usedCapacity.get(shift) + 1);
+    }
+
+    public void setUsedCapacityToZero() {
+        for(Shift shift : Shift.getValidShifts()) {
+            this.usedCapacity.put(shift, 0);
+        }
+
     }
 
     @Override

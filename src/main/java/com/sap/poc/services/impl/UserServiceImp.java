@@ -3,6 +3,7 @@ package com.sap.poc.services.impl;
 import com.sap.poc.daos.TeamDao;
 import com.sap.poc.daos.UserDao;
 import com.sap.poc.models.*;
+import com.sap.poc.services.TeamMemberShiftService;
 import com.sap.poc.services.TeamService;
 import com.sap.poc.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,8 @@ public class UserServiceImp implements UserService, UserDetailsService {
     private UserDao hibernateUserDao;
     @Resource
     private TeamService teamService;
+    @Resource
+    private TeamMemberShiftService teamMemberShiftService;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -67,7 +70,11 @@ public class UserServiceImp implements UserService, UserDetailsService {
     @Override
     public List<TeamMember> getMembersByTeamId(int teamId) {
         Team team = teamService.getTeamById(teamId);
-        return hibernateUserDao.getMembersByTeam(team);
+        List<TeamMember> members = hibernateUserDao.getMembersByTeam(team);
+        for(TeamMember member : members) {
+            member.setShifts(new HashSet<TeamMemberShift>(teamMemberShiftService.getTeamMemberShiftsByMember(member)));
+        }
+        return members;
     }
 
     @Override

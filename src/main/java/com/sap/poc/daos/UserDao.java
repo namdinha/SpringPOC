@@ -1,6 +1,7 @@
 package com.sap.poc.daos;
 
 import com.sap.poc.models.Team;
+import com.sap.poc.models.TeamIntervalCalendar;
 import com.sap.poc.models.TeamMember;
 import com.sap.poc.models.User;
 import org.springframework.transaction.annotation.Transactional;

@@ -5,16 +5,36 @@ import com.sap.poc.models.CalendarDate;
 import com.sap.poc.models.Shift;
 import com.sap.poc.models.TeamMember;
 import com.sap.poc.models.TeamMemberShift;
+import com.sap.poc.services.CalendarDateService;
+import com.sap.poc.services.TeamMemberShiftService;
 
 import java.util.List;
 import java.util.Map;
 
 public class GreedyAllocator implements Allocator {
 
+    private CalendarDateService calendarDateService;
+    private TeamMemberShiftService teamMemberShiftService;
+
+    public GreedyAllocator(CalendarDateService calendarDateService, TeamMemberShiftService teamMemberShiftService) {
+        this.calendarDateService = calendarDateService;
+        this.teamMemberShiftService = teamMemberShiftService;
+    }
+
     @Override
-    public void allocate(List<TeamMember> members){
+    public void allocate(List<TeamMember> members) {
+        deallocate(members);
         allocateDefinedShifts(members);
         allocateAnyShifts(members);
+    }
+
+    private void deallocate(List<TeamMember> members) {
+        for(TeamMember member : members) {
+            for(TeamMemberShift shift : member.getShifts()) {
+                shift.setAllocatedShift(null);
+                shift.getDate().setUsedCapacityToZero();
+            }
+        }
     }
 
     private void allocateDefinedShifts(List<TeamMember> members) {
@@ -40,6 +60,8 @@ public class GreedyAllocator implements Allocator {
                         e.printStackTrace();
                     }
                 }
+                calendarDateService.update(shift.getDate());
+                teamMemberShiftService.update(shift);
             }
         }
     }

@@ -1,9 +1,6 @@
 package com.sap.poc.services;
 
-import com.sap.poc.models.CalendarDate;
-import com.sap.poc.models.TeamMember;
-import com.sap.poc.models.TeamMemberShift;
-import com.sap.poc.models.User;
+import com.sap.poc.models.*;
 
 import java.util.Calendar;
 import java.util.List;

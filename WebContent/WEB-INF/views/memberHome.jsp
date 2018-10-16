@@ -28,10 +28,10 @@
             <c:forEach items="${shifts}" var="shift">
                 <div id="${shift.id}">
                     ${shift.date.toString()}
-                    ${shift.shift}
+                    ${shift.desiredShift}
                     <form:form action="/calendar/editShift" method="post" name="editedShift">
                         <input type="hidden" id="editedShiftId" name="id" value="${shift.id}">
-                        <select name="shift">
+                        <select name="desiredShift">
                             <option disabled selected>Select</option>
                             <option value="ANY">ANY</option>
                             <option value="DAY">DAY</option>
