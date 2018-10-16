@@ -52,4 +52,11 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
+    <bean name="NotificationService" class="com.sap.poc.services.impl.NotificationServiceImp">
+        <constructor-arg ref="hibernateNotificationDao"></constructor-arg>
+    </bean>
+    <bean name="hibernateNotificationDao" class="com.sap.poc.daos.impl.NotificationDaoImp">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
 </beans>
