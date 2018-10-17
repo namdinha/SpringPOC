@@ -116,6 +116,13 @@
             </div>
             <button type="submit">Submit</button>
         </form:form>
+
+        <form:form action="/notification" method="post" name="notification">
+            <div>
+                <input name="message" type="text">
+            </div>
+            <button type="submit">Submit</button>
+        </form:form>
     </security:authorize>
     <script>
         $.notify.defaults({

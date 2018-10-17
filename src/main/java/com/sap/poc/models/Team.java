@@ -68,4 +68,16 @@ public class Team {
     public void addIntervalCalendar(TeamIntervalCalendar intervalCalendar) {
         this.intervalCalendars.add(intervalCalendar);
     }
+
+    public Set<Notification> getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(Set<Notification> notifications) {
+        this.notifications = notifications;
+    }
+
+    public void addNotification(Notification notification) {
+        this.notifications.add(notification);
+    }
 }
