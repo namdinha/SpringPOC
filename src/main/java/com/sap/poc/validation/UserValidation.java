@@ -7,15 +7,18 @@ import org.springframework.validation.Validator;
 
 public class UserValidation implements Validator {
     @Override
-    public boolean supports(Class<?> aClass) {
-        return User.class.isAssignableFrom(aClass);
+    public boolean supports(Class<?> clazz) {
+        return User.class.isAssignableFrom(clazz);
     }
 
     @Override
-    public void validate(Object o, Errors errors) {
-        ValidationUtils.rejectIfEmpty(errors, "name", "field.required");
-        ValidationUtils.rejectIfEmpty(errors, "email", "field.required");
-        ValidationUtils.rejectIfEmpty(errors, "username", "field.required");
-        ValidationUtils.rejectIfEmpty(errors, "password", "field.required");
+    public void validate(Object target, Errors errors) {
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "field.required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "field.required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "field.required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "field.required");
+
+        User user = (User) target;
+        if(user.getPassword().length() <= 0) errors.rejectValue("password", "field.required");
     }
 }

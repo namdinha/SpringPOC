@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <html>
     <head>
@@ -8,14 +9,16 @@
     </head>
     <body>
         <h1>Register</h1>
-        <form:form action="/register" method="post" name="user">
+        <form:form action="${s:mvcUrl('RC#registerOwner').build()}" method="post" name="user">
             <div>
                 <label for="name">Name:</label>
                 <input id="name" type="text" name="name">
+                <form:errors path="name"/>
             </div>
             <div>
                 <label for="email">E-mail:</label>
-                <input id="email" type="text" name="email">
+                <input id="email" type="email" name="email">
+                <form:errors path="user.email"/>
             </div>
             <div>
                 <label for="username">Username:</label>

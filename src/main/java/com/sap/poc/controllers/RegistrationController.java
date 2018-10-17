@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -50,7 +51,7 @@ public class RegistrationController extends GenericController{
     }
 
     @RequestMapping(value = "/member", method = RequestMethod.POST)
-    public ModelAndView registerMember(@Valid TeamMember member, Principal principal, BindingResult result) {
+    public ModelAndView registerMember(@Valid TeamMember member, BindingResult result, Principal principal) {
         ModelAndView modelAndView = new ModelAndView("redirect:/ownerHome");
 
         if(result.hasErrors()) return modelAndView;

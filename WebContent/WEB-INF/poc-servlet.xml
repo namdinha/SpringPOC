@@ -16,4 +16,32 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
+    <bean id="messageSource"
+          class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basename" value="com.sap.poc.validation.messages"/>
+        <property name="useCodeAsDefaultMessage" value="true" />
+    </bean>
+
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+    <property name="validationMessageSource" ref="messageSource"/>
+    </bean>
+
+    <bean id="userValidator" class="com.sap.poc.validation.UserValidation"/>
+
+    <!--<bean id="localeResolver"-->
+    <!--class="org.springframework.web.servlet.i18n.CookieLocaleResolver">-->
+    <!--<property name="defaultLocale" value="en" />-->
+    <!--<property name="cookieName" value="myAppLocaleCookie"></property>-->
+    <!--<property name="cookieMaxAge" value="3600"></property>-->
+    <!--</bean>-->
+
+    <!--<interceptors>-->
+    <!--<bean-->
+    <!--class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">-->
+    <!--<property name="paramName" value="locale" />-->
+    <!--</bean>-->
+    <!--</interceptors>-->
+
+    <!--<context:component-scan base-package="com.journaldev.spring" />-->
+
 </beans>
