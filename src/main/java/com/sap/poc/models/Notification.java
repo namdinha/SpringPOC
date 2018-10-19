@@ -3,9 +3,6 @@ package com.sap.poc.models;
 import javax.persistence.*;
 
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "NOTIFICATION_TYPE")
-@DiscriminatorValue("Default")
 public class Notification {
 
     @Id
@@ -17,6 +14,12 @@ public class Notification {
     private Team team;
 
     private String message;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "calendarDate_id")
+    private CalendarDate calendarDate;
+
+    private Shift shift;
 
     public int getId() {
         return id;
@@ -40,5 +43,21 @@ public class Notification {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public CalendarDate getCalendarDate() {
+        return calendarDate;
+    }
+
+    public void setCalendarDate(CalendarDate calendarDate) {
+        this.calendarDate = calendarDate;
+    }
+
+    public Shift getShift() {
+        return shift;
+    }
+
+    public void setShift(Shift shift) {
+        this.shift = shift;
     }
 }

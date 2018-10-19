@@ -1,5 +1,6 @@
 package com.sap.poc.models;
 
+import org.apache.commons.text.WordUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -54,7 +55,7 @@ public abstract class User implements UserDetails {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = WordUtils.capitalize(name);
     }
 
     public String getEmail() {

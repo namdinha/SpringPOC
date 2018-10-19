@@ -4,13 +4,19 @@ import com.sap.poc.logic.Allocator;
 import com.sap.poc.logic.impl.GreedyAllocator;
 import com.sap.poc.models.*;
 import com.sap.poc.services.*;
+import com.sap.poc.validation.NotificationValidation;
+import com.sap.poc.validation.TeamIntervalCalendarValidation;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.*;
 
@@ -94,6 +100,18 @@ public class CalendarController extends GenericController{
             newInterval.setDates();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+
+        List<CalendarDate> dates = calendarDateService.getAllCalendarDates();
+        for(CalendarDate date : newInterval.getDates()) {
+            if(dates.contains(date)) {
+                teamIntervalCalendarService.delete(newInterval);
+                return modelAndView;
+            }
+            if(dates.contains(date)) {
+                teamIntervalCalendarService.delete(newInterval);
+                return modelAndView;
+            }
         }
 
         teamIntervalCalendarService.update(newInterval);

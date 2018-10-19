@@ -27,11 +27,11 @@ public class CalendarDate implements Comparable<CalendarDate> {
     private TeamIntervalCalendar teamIntervalCalendar;
 
     @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "CAPACITIES", joinColumns = @JoinColumn(name = "CalendarDate_id"))
+    @CollectionTable(name = "capacity", joinColumns = @JoinColumn(name = "CalendarDate_id"))
     private Map<Shift, Integer> capacity = new HashMap<>();
 
     @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "USEDCAPACITIES", joinColumns = @JoinColumn(name = "CalendarDate_id"))
+    @CollectionTable(name = "usedCapacity", joinColumns = @JoinColumn(name = "CalendarDate_id"))
     private Map<Shift, Integer> usedCapacity = new HashMap<>();
 
     @OneToMany(mappedBy = "date")
@@ -140,5 +140,11 @@ public class CalendarDate implements Comparable<CalendarDate> {
     @Override
     public int compareTo(CalendarDate o) {
         return this.getDate().compareTo(o.getDate());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        CalendarDate calendarDate = (CalendarDate) o;
+        return calendarDate.getDate().equals(this.date);
     }
 }

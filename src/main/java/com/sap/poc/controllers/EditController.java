@@ -50,17 +50,6 @@ public class EditController extends GenericController {
         return modelAndView;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView getEditOwnerPage(TeamOwner editOwner){
-        ModelAndView modelAndView = new ModelAndView("editOwner");
-
-        editOwner = (TeamOwner) userService.getUserByLogin(editOwner.getUsername());
-
-        modelAndView.addObject("editOwner", editOwner);
-
-        return modelAndView;
-    }
-
     @RequestMapping(value = "/member", method = RequestMethod.GET)
     public ModelAndView getEditMemberPage(TeamMember editMember){
         ModelAndView modelAndView = new ModelAndView("editMember");

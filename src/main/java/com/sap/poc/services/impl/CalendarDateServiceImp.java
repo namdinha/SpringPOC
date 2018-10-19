@@ -4,7 +4,6 @@ import com.sap.poc.daos.CalendarDateDao;
 import com.sap.poc.models.CalendarDate;
 import com.sap.poc.models.Shift;
 import com.sap.poc.models.TeamIntervalCalendar;
-import com.sap.poc.models.TeamMemberShift;
 import com.sap.poc.services.CalendarDateService;
 import com.sap.poc.services.TeamMemberShiftService;
 import com.sap.poc.services.UserService;
@@ -90,5 +89,10 @@ public class CalendarDateServiceImp implements CalendarDateService {
             calendarDate.setCapacity(capacity);
             this.update(calendarDate);
         }
+    }
+
+    @Override
+    public List<CalendarDate> getAllCalendarDates() {
+        return hibernateCalendarDateDao.getAllCalendarDates();
     }
 }

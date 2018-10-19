@@ -2,21 +2,17 @@ package com.sap.poc.daos.impl;
 
 import com.sap.poc.daos.CalendarDateDao;
 import com.sap.poc.models.CalendarDate;
-import com.sap.poc.models.Shift;
 import com.sap.poc.models.TeamIntervalCalendar;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Map;
 
 @Transactional
 public class CalendarDateDaoImp extends HibernateDaoSupport implements CalendarDateDao {
@@ -62,6 +58,15 @@ public class CalendarDateDaoImp extends HibernateDaoSupport implements CalendarD
         try (Session session = sessionFactory.openSession()) {
             DetachedCriteria criteria = DetachedCriteria.forClass(CalendarDate.class);
             criteria.add(Restrictions.like("teamIntervalCalendar", teamIntervalCalendar));
+            criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+            return (List<CalendarDate>) criteria.getExecutableCriteria(session).list();
+        }
+    }
+
+    @Override
+    public List<CalendarDate> getAllCalendarDates() {
+        try (Session session = sessionFactory.openSession()) {
+            DetachedCriteria criteria = DetachedCriteria.forClass(CalendarDate.class);
             criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
             return (List<CalendarDate>) criteria.getExecutableCriteria(session).list();
         }

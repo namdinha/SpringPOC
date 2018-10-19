@@ -21,11 +21,11 @@ public class TeamIntervalCalendar {
     private Team team;
 
     @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "DEFAULTCAPACITIES", joinColumns = @JoinColumn(name = "teamIntervalCalendar_id"))
+    @CollectionTable(name = "defaultCapacity", joinColumns = @JoinColumn(name = "teamIntervalCalendar_id"))
     private Map<Shift, Integer> defaultCapacity = new HashMap<>();
 
     @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "DEFAULTCAPACITIESONHOLIDAYS", joinColumns = @JoinColumn(name = "teamIntervalCalendar_id"))
+    @CollectionTable(name = "defaultCapacityOnHolidays", joinColumns = @JoinColumn(name = "teamIntervalCalendar_id"))
     private Map<Shift, Integer> defaultCapacityOnHolidays = new HashMap<>();
 
     public int getId() {

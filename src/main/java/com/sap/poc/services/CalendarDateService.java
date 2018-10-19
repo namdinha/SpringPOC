@@ -6,7 +6,6 @@ import com.sap.poc.models.TeamIntervalCalendar;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public interface CalendarDateService {
 
@@ -19,4 +18,5 @@ public interface CalendarDateService {
     void updateDates(List<CalendarDate> calendarDates);
     void changeHolidayOrWeekend(CalendarDate calendarDate);
     void updateCapacityOfDates(List<CalendarDate> calendarDates, HashMap<Shift, Integer> capacity);
+    List<CalendarDate> getAllCalendarDates();
 }

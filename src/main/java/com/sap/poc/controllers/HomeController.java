@@ -2,6 +2,7 @@ package com.sap.poc.controllers;
 
 import com.sap.poc.models.*;
 import com.sap.poc.services.*;
+import com.sun.media.sound.MidiOutDeviceProvider;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,6 +25,8 @@ public class HomeController extends GenericController{
     private TeamService teamService;
     @Resource
     private TeamMemberShiftService teamMemberShiftService;
+    @Resource
+    private NotificationService notificationService;
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView getHomePage() {
@@ -48,6 +51,7 @@ public class HomeController extends GenericController{
 
         modelAndView.addObject("members", getMembersList(principal));
         modelAndView.addObject("intervals", intervals);
+        modelAndView.addObject("editOwner", owner);
 
         return modelAndView;
     }
@@ -58,6 +62,7 @@ public class HomeController extends GenericController{
 
         TeamMember member = (TeamMember) getLoggedUser(principal);
 
+        modelAndView.addObject("notifications", notificationService.getNotificationsByTeam(member.getTeam()));
         modelAndView.addObject("shifts", teamMemberShiftService.getTeamMemberShiftsByMember(member));
 
         return modelAndView;

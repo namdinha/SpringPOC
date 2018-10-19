@@ -12,6 +12,6 @@ public interface CalendarDateDao {
     void update(CalendarDate calendarDate);
     void delete(CalendarDate calendarDate);
     CalendarDate getCalendarDateById(int id);
-
     List<CalendarDate> getCalendarDatesByInterval(TeamIntervalCalendar teamIntervalCalendar);
+    List<CalendarDate> getAllCalendarDates();
 }
