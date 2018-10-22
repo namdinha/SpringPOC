@@ -135,6 +135,8 @@ public class CalendarController extends GenericController{
         teamMemberShiftService.createShiftsOfMembers(members);
         userService.updateTeamMembers(members);
 
+        modelAndView.addObject("teamId", team.getId());
+
         return modelAndView;
     }
 
