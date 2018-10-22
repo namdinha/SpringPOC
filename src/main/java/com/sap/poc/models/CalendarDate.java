@@ -10,8 +10,8 @@ import java.util.*;
 @Entity
 public class CalendarDate implements Comparable<CalendarDate> {
 
-    private static final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-    private static final SimpleDateFormat formatOut = new SimpleDateFormat("dd/MM/yyyy");
+    public static final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+    public static final SimpleDateFormat formatOut = new SimpleDateFormat("dd/MM/yyyy");
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,6 +66,8 @@ public class CalendarDate implements Comparable<CalendarDate> {
 
     public void setDate(Calendar date) {
         this.date = date;
+        if(this.date.get(Calendar.DAY_OF_WEEK) == 1 || this.date.get(Calendar.DAY_OF_WEEK) == 7)
+            isHolidayOrWeekend = true;
     }
 
     public void setDate(String date) {

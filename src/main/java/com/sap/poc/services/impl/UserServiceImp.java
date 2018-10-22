@@ -99,6 +99,8 @@ public class UserServiceImp implements UserService, UserDetailsService {
         for(CalendarDate date : dates){
             shift = new TeamMemberShift(date);
             shift.setMember(member);
+            if(date.isHolidayOrWeekend())
+                shift.setAvailable(false);
             date.addMemberShift(shift);
             shifts.add(shift);
         }

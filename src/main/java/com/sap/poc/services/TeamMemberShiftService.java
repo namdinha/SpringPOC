@@ -21,4 +21,6 @@ public interface TeamMemberShiftService {
     void changeAvailabilityByDate(CalendarDate date, boolean availability);
     void updateShiftsByMembers(List<TeamMember> members);
     List<TeamMemberShift> getTeamMemberShiftsByCalendarDate(CalendarDate calendarDate);
+
+    TeamMemberShift getShiftByCalendarDateAndMember(CalendarDate calendarDate, TeamMember member);
 }

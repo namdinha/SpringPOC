@@ -3,6 +3,7 @@ package com.sap.poc.daos.impl;
 import com.sap.poc.daos.NotificationDao;
 import com.sap.poc.models.Notification;
 import com.sap.poc.models.Team;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
@@ -57,6 +58,7 @@ public class NotificationDaoImp extends HibernateDaoSupport implements Notificat
         try (Session session = sessionFactory.openSession()) {
             DetachedCriteria criteria = DetachedCriteria.forClass(Notification.class);
             criteria.add(Restrictions.like("team", team));
+            criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
             return (List<Notification>) criteria.getExecutableCriteria(session).list();
         }
     }

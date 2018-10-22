@@ -4,19 +4,12 @@ import com.sap.poc.logic.Allocator;
 import com.sap.poc.logic.impl.GreedyAllocator;
 import com.sap.poc.models.*;
 import com.sap.poc.services.*;
-import com.sap.poc.validation.NotificationValidation;
-import com.sap.poc.validation.TeamIntervalCalendarValidation;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
-import javax.validation.Valid;
 import java.security.Principal;
 import java.util.*;
 
@@ -34,6 +27,8 @@ public class CalendarController extends GenericController{
     private TeamMemberShiftService teamMemberShiftService;
     @Resource
     private CalendarDateService calendarDateService;
+    @Resource
+    private NotificationService notificationService;
 
     @RequestMapping(value = "/allocate", method = RequestMethod.GET)
     public ModelAndView allocate(Principal principal, Integer teamId){
@@ -59,10 +54,28 @@ public class CalendarController extends GenericController{
 
         TeamMemberShift shift = teamMemberShiftService.getTeamMemberShiftById(editedShift.getId());
         shift.setDesiredShift(editedShift.getDesiredShift());
+        shift.setAvailable(true);
 
         teamMemberShiftService.update(shift);
 
         modelAndView.addObject("teamId", shift.getDate().getTeamIntervalCalendar().getTeam().getId());
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "editShiftFromNotification", method = RequestMethod.POST)
+    public ModelAndView editShiftFromNotification(Principal principal, Notification notificationId) {
+        ModelAndView modelAndView = new ModelAndView("redirect:/calendar/allocate");
+
+        Notification notification = notificationService.getNotificationById(notificationId.getId());
+        TeamMember member = (TeamMember) getLoggedUser(principal);
+        TeamMemberShift teamMemberShift = teamMemberShiftService.getShiftByCalendarDateAndMember(notification.getCalendarDate(), member);
+
+        teamMemberShift.setDesiredShift(notification.getShift());
+
+        teamMemberShiftService.update(teamMemberShift);
+
+        modelAndView.addObject("teamId", teamMemberShift.getDate().getTeamIntervalCalendar().getTeam().getId());
 
         return modelAndView;
     }
@@ -82,7 +95,7 @@ public class CalendarController extends GenericController{
 
     @RequestMapping(value = "/addInterval", method = RequestMethod.POST)
     public ModelAndView addInterval(Principal principal, TeamIntervalCalendar newInterval){
-        ModelAndView modelAndView = new ModelAndView("redirect:/ownerHome");
+        ModelAndView modelAndView = new ModelAndView("redirect:/calendar/allocate");
 
         TeamOwner owner = (TeamOwner) getLoggedUser(principal);
         Team team = teamService.getTeamByOwner(owner.getUsername());

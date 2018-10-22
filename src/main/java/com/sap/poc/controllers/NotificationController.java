@@ -37,14 +37,13 @@ public class NotificationController extends GenericController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ModelAndView createNotification(@Valid Notification notification, BindingResult result, Principal principal) {
+    public ModelAndView createNotification(Notification notification, Principal principal) {
         ModelAndView modelAndView = new ModelAndView("redirect:/ownerHome");
 
         TeamOwner owner = (TeamOwner) getLoggedUser(principal);
         Team team = teamService.getTeamByOwner(owner.getUsername());
-
-        if(result.hasErrors()) return modelAndView;
-
+        if(notification.getDateId() > 0)
+            notification.setCalendarDate(calendarDateService.getCalendarDateById(notification.getDateId()));
         notification.setTeam(team);
         notificationService.create(notification);
 

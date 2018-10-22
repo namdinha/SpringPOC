@@ -1,6 +1,8 @@
 package com.sap.poc.models;
 
 import javax.persistence.*;
+import java.text.ParseException;
+import java.util.Calendar;
 
 @Entity
 public class TeamMemberShift implements Comparable<TeamMemberShift> {

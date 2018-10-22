@@ -52,6 +52,7 @@ public class HomeController extends GenericController{
         modelAndView.addObject("members", getMembersList(principal));
         modelAndView.addObject("intervals", intervals);
         modelAndView.addObject("editOwner", owner);
+        modelAndView.addObject("notifications", notificationService.getNotificationsByTeam(team));
 
         return modelAndView;
     }

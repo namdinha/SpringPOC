@@ -73,4 +73,15 @@ public class TeamMemberShiftDaoImp extends HibernateDaoSupport implements TeamMe
             return (List<TeamMemberShift>) criteria.getExecutableCriteria(session).list();
         }
     }
+
+    @Override
+    public TeamMemberShift getShiftByCalendarDateAndMember(CalendarDate calendarDate, TeamMember member) {
+        try (Session session = sessionFactory.openSession()) {
+            DetachedCriteria criteria = DetachedCriteria.forClass(TeamMemberShift.class);
+            criteria.add(Restrictions.and(Restrictions.like("member", member),
+                    Restrictions.like("date", calendarDate)));
+            criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+            return (TeamMemberShift) criteria.getExecutableCriteria(session).uniqueResult();
+        }
+    }
 }

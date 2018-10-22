@@ -9,6 +9,7 @@ import com.sap.poc.services.TeamMemberShiftService;
 import com.sap.poc.services.UserService;
 
 import javax.annotation.Resource;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -64,7 +65,9 @@ public class TeamMemberShiftServiceImp implements TeamMemberShiftService {
 
     @Override
     public List<TeamMemberShift> getTeamMemberShiftsByMember(TeamMember member) {
-        return hibernateTeamMemberShiftDao.getTeamMemberShiftsByMember(member);
+        List<TeamMemberShift> shifts = hibernateTeamMemberShiftDao.getTeamMemberShiftsByMember(member);
+        Collections.sort(shifts);
+        return shifts;
     }
 
     @Override
@@ -89,5 +92,10 @@ public class TeamMemberShiftServiceImp implements TeamMemberShiftService {
     @Override
     public List<TeamMemberShift> getTeamMemberShiftsByCalendarDate(CalendarDate calendarDate) {
         return hibernateTeamMemberShiftDao.getTeamMemberShiftsByCalendarDate(calendarDate);
+    }
+
+    @Override
+    public TeamMemberShift getShiftByCalendarDateAndMember(CalendarDate calendarDate, TeamMember member) {
+        return hibernateTeamMemberShiftDao.getShiftByCalendarDateAndMember(calendarDate, member);
     }
 }
